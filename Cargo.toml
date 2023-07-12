@@ -13,17 +13,23 @@ path = "src/main.rs"
 name = "server_handler"
 
 [dependencies]
-anyhow = "1.0"
+tokio = { version = "1", features = ["full"] }
+hyper = "0.14"
+tower-http = { version = "0.4", features = ["trace", "timeout", "sensitive-headers", "request-id", "set-header"] }
+tower = "0.4"
 axum = "0.6"
+sqlx = { version = "0.7", features = ["postgres", "runtime-tokio-rustls", "macros", "migrate", "chrono", "uuid"] }
+
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
+
+reqwest = { version = "0.11", features = ["json", "rustls-tls"] }
 chrono = { version = "0.4", features = ["serde"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-sqlx = { version = "0.7", features = ["postgres", "runtime-tokio-rustls", "macros", "migrate", "chrono", "uuid"] }
-tokio = { version = "1", features = ["full"] }
-tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
-tower-http = { version = "0.4", features = ["trace"] }
-hyper = "0.14"
-reqwest = { version = "0.11", features = ["json", "rustls-tls"] }
 uuid = { version = "1.4", features = ["v4"] }
+
+
 dotenv = "0.15"
+thiserror = "1.0.43"
+anyhow = "1.0"

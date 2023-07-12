@@ -1,18 +1,27 @@
-use std::net::SocketAddr;
+use std::net::{Ipv6Addr, SocketAddr};
 
 use server::{configure_db, get_subscriber, init_subscriber, Settings};
 
 #[tokio::main]
 async fn main() -> Result<(), hyper::Error> {
+    // This returns an error if the `.env` file doesn't exist, but that's not what we want
+    // since we're not going to use a `.env` file if we deploy this application.
+    dotenv::dotenv().ok();
+
+    // Parse our configuration from the environment.
+    // This will exit with a help message if something is wrong.
     let cfg = Settings::new().expect("Failed to read configuration");
 
-    let subscriber = get_subscriber("info".into());
+    // Initialize tracing.
+    let subscriber = get_subscriber("debug".into());
     init_subscriber(subscriber);
 
     let pool = configure_db(cfg.db_url)
         .await
         .expect("Failed to configure db");
 
-    let addr = SocketAddr::from(([0, 0, 0, 0, 0, 0, 0, 0], cfg.app_port));
+    let addr = SocketAddr::from((Ipv6Addr::UNSPECIFIED, cfg.app_port));
+
+    // Finally, we spin up our API.
     server::serve(addr, pool).await
 }
