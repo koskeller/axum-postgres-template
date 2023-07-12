@@ -5,13 +5,12 @@ use std::net::SocketAddr;
 
 mod configuration;
 pub use configuration::*;
-
 mod telemetry;
 pub use telemetry::*;
-
+mod middleware;
+pub use middleware::*;
 mod db;
 pub use db::*;
-
 mod routes;
 
 pub fn serve(addr: SocketAddr, pool: PgPool) -> Server<AddrIncoming, IntoMakeService<Router>> {
