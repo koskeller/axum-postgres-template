@@ -8,8 +8,8 @@ use tower_http::{
 use tracing::{Level, Subscriber};
 use tracing_subscriber::{fmt, layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
 
-pub fn get_subscriber(env_filer: String) -> impl Subscriber + Send + Sync {
-    let env_filter_layer = EnvFilter::try_from_default_env().unwrap_or_else(|_| env_filer.into());
+pub fn get_subscriber() -> impl Subscriber + Send + Sync {
+    let env_filter_layer = EnvFilter::try_from_default_env().unwrap_or_else(|_| "debug".into());
     let formatting_layer = fmt::layer().json();
 
     tracing_subscriber::registry()

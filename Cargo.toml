@@ -15,8 +15,8 @@ name = "server_handler"
 [dependencies]
 tokio = { version = "1", features = ["full"] }
 hyper = "0.14"
-tower-http = { version = "0.4", features = ["trace", "timeout", "sensitive-headers", "request-id", "set-header"] }
-tower = "0.4"
+tower-http = { version = "0.4", features = ["trace", "timeout", "sensitive-headers", "request-id"] }
+tower = { version = "0.4", features = []}
 axum = "0.6"
 sqlx = { version = "0.7", features = ["postgres", "runtime-tokio-rustls", "macros", "migrate", "chrono", "uuid"] }
 

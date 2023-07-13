@@ -1,6 +1,6 @@
 use std::net::{Ipv6Addr, SocketAddr};
 
-use server::{configure_db, get_subscriber, init_subscriber, Settings};
+use server::{configure_db, get_subscriber, init_subscriber, Config};
 
 #[tokio::main]
 async fn main() -> Result<(), hyper::Error> {
@@ -10,10 +10,10 @@ async fn main() -> Result<(), hyper::Error> {
 
     // Parse our configuration from the environment.
     // This will exit with a help message if something is wrong.
-    let cfg = Settings::new().expect("Failed to read configuration");
+    let cfg = Config::new().expect("Failed to read configuration");
 
     // Initialize tracing.
-    let subscriber = get_subscriber("debug".into());
+    let subscriber = get_subscriber();
     init_subscriber(subscriber);
 
     let pool = configure_db(cfg.db_url)
