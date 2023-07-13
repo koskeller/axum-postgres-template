@@ -1,17 +1,18 @@
 use axum::{extract::State, http::StatusCode, response::IntoResponse, Json};
 use chrono::Utc;
-use sqlx::PgPool;
 use tracing::log::{error, info};
 use uuid::Uuid;
+
+use crate::AppState;
 
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
 pub struct ExamplePayload {
     ping: String,
 }
 
-#[tracing::instrument(name = "Example action", skip(pool))]
+#[tracing::instrument(name = "Example action", skip(state))]
 pub async fn example_handler(
-    State(pool): State<PgPool>,
+    State(state): State<AppState>,
     Json(payload): Json<ExamplePayload>,
 ) -> impl IntoResponse {
     info!("Handling example request");
@@ -21,7 +22,7 @@ pub async fn example_handler(
         payload.ping,
         Utc::now()
     )
-    .execute(&pool)
+    .execute(&state.db)
     .await;
 
     match result {

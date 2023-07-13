@@ -1,14 +1,14 @@
 use sqlx::{Connection, Executor, PgConnection, PgPool};
-use std::{net::SocketAddr, sync::Once};
+use std::sync::Once;
 use uuid::Uuid;
 
-use server::{configure_db, get_subscriber, init_subscriber, serve, Config};
+use server::{run, setup_db, setup_tracing, Configuration};
 
 static TRACING: Once = Once::new();
 
 pub struct TestApp {
-    pub pool: PgPool,
     pub addr: String,
+    pub pool: PgPool,
     pub reqwest: reqwest::Client,
 }
 
@@ -16,24 +16,25 @@ impl TestApp {
     pub async fn new() -> Self {
         dotenv::dotenv().ok();
 
-        let cfg = Config::new().expect("Failed to read configuration");
+        // So tests can spawn multiple servers on OS assigned ports.
+        std::env::set_var("PORT", "0");
 
-        TRACING.call_once(|| {
-            let subscriber = get_subscriber();
-            init_subscriber(subscriber);
-        });
+        TRACING.call_once(setup_tracing);
 
-        let url = create_db(&cfg).await;
-        let pool = configure_db(url).await.expect("Failed to configure db");
+        let cfg = Configuration::new().expect("Failed to read configuration");
+
+        let url = create_temp_db(&cfg.db_dsn).await;
+        let db = setup_db(&url, cfg.db_pool_max_size)
+            .await
+            .expect("Failed to configure db");
 
         let reqwest = reqwest::Client::new();
 
-        let addr = SocketAddr::from(([127, 0, 0, 1], 0));
-        let server = serve(addr, pool.clone());
+        let server = run(cfg, db.clone());
         let addr = format!("http://{}", server.local_addr());
         let _ = tokio::spawn(server);
         Self {
-            pool,
+            pool: db,
             addr,
             reqwest,
         }
@@ -44,11 +45,10 @@ impl TestApp {
     }
 }
 
-pub async fn create_db(cfg: &Config) -> String {
+pub async fn create_temp_db(db_dsn: &str) -> String {
     let randon_db_name = Uuid::new_v4().to_string();
-    let url = cfg.db_url_without_db();
-    let db_url = format!("{}{}", url, randon_db_name);
-    let mut conn = PgConnection::connect(&url)
+    let db_url = format!("{}/{}", &db_dsn, randon_db_name);
+    let mut conn = PgConnection::connect(db_dsn)
         .await
         .expect("Failed to connect to Postgres");
     conn.execute(format!(r#"CREATE DATABASE "{}";"#, randon_db_name).as_str())

@@ -5,20 +5,17 @@ use tower_http::{
     sensitive_headers::{SetSensitiveRequestHeadersLayer, SetSensitiveResponseHeadersLayer},
     trace::{DefaultMakeSpan, DefaultOnResponse, TraceLayer},
 };
-use tracing::{Level, Subscriber};
+use tracing::Level;
 use tracing_subscriber::{fmt, layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
 
-pub fn get_subscriber() -> impl Subscriber + Send + Sync {
+pub fn setup_tracing() {
     let env_filter_layer = EnvFilter::try_from_default_env().unwrap_or_else(|_| "debug".into());
     let formatting_layer = fmt::layer().json();
 
     tracing_subscriber::registry()
         .with(env_filter_layer)
         .with(formatting_layer)
-}
-
-pub fn init_subscriber(subscriber: impl Subscriber + Send + Sync) {
-    subscriber.init()
+        .init()
 }
 
 pub fn trace_layer() -> TraceLayer<SharedClassifier<ServerErrorsAsFailures>> {
