@@ -5,8 +5,8 @@ use crate::helpers::*;
 #[tokio::test]
 async fn health_check_ok() {
     let app = TestApp::new().await;
-    let url = app.get_url("/health_check");
-    let resp = reqwest::get(url).await.unwrap();
+
+    let resp = app.get("/health_check").await;
     assert_eq!(resp.status(), StatusCode::OK);
 
     let request_id = resp.headers().get("x-request-id").unwrap();
@@ -16,5 +16,5 @@ async fn health_check_ok() {
 #[tokio::test]
 async fn db_connection_ok() {
     let app = TestApp::new().await;
-    assert_eq!(app.pool.size(), 1);
+    assert_eq!(app.db.size(), 1);
 }
