@@ -9,8 +9,10 @@ async fn health_check_ok() {
     let resp = app.get("/health_check").await;
     assert_eq!(resp.status(), StatusCode::OK);
 
-    let request_id = resp.headers().get("x-request-id").unwrap();
-    assert!(!request_id.is_empty());
+    let h = resp.headers();
+    assert!(h.get("x-request-id").is_some());
+    assert_eq!(h.get("access-control-allow-origin").unwrap(), "*");
+    assert!(h.get("vary").is_some());
 }
 
 #[tokio::test]
