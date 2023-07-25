@@ -14,6 +14,7 @@ pub use telemetry::*;
 mod middleware;
 pub use middleware::*;
 mod db;
+mod errors;
 pub use db::*;
 mod routes;
 

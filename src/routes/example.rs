@@ -1,9 +1,9 @@
-use axum::{extract::State, http::StatusCode, response::IntoResponse, Json};
+use axum::{extract::State, http::StatusCode, Json};
 use chrono::Utc;
 use tracing::log::{error, info};
 use uuid::Uuid;
 
-use crate::AppState;
+use crate::{errors::HTTPError, AppState};
 
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
 pub struct ExamplePayload {
@@ -14,7 +14,7 @@ pub struct ExamplePayload {
 pub async fn example_handler(
     State(state): State<AppState>,
     Json(payload): Json<ExamplePayload>,
-) -> impl IntoResponse {
+) -> Result<StatusCode, HTTPError> {
     info!("Handling example request");
     let result = sqlx::query!(
         "INSERT INTO example (uid, ping, created_at) VALUES ($1, $2, $3)",
@@ -26,10 +26,10 @@ pub async fn example_handler(
     .await;
 
     match result {
-        Ok(_) => StatusCode::OK,
+        Ok(_) => Ok(StatusCode::OK),
         Err(e) => {
             error!("failed to execute query: {}", e);
-            StatusCode::INTERNAL_SERVER_ERROR
+            Err(HTTPError::new("Example error").with_status(StatusCode::INTERNAL_SERVER_ERROR))
         }
     }
 }

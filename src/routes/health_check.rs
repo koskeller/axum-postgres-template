@@ -1,6 +1,8 @@
-use axum::{response::IntoResponse, Json};
-use serde_json::json;
+use axum::Json;
+use serde_json::{json, Value};
 
-pub async fn health_check_handler() -> impl IntoResponse {
-    Json(json!({ "status": "ok" }))
+use crate::errors::HTTPError;
+
+pub async fn health_check_handler() -> Result<Json<Value>, HTTPError> {
+    Ok(Json(json!({ "status": "ok" })))
 }
