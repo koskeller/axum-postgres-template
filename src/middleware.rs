@@ -14,12 +14,12 @@ impl MakeRequestId for Id {
     }
 }
 
-pub fn requiest_id_layer() -> SetRequestIdLayer<Id> {
+pub fn request_id_layer() -> SetRequestIdLayer<Id> {
     let x_request_id = HeaderName::from_static("x-request-id");
     SetRequestIdLayer::new(x_request_id.clone(), Id::default())
 }
 
-pub fn propagate_requiest_id_layer() -> PropagateRequestIdLayer {
+pub fn propagate_request_id_layer() -> PropagateRequestIdLayer {
     let x_request_id = HeaderName::from_static("x-request-id");
     PropagateRequestIdLayer::new(x_request_id)
 }

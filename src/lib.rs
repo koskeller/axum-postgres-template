@@ -30,8 +30,8 @@ pub fn run(cfg: Config, db: PgPool) -> Server<AddrIncoming, IntoMakeService<Rout
     let trace_layer = telemetry::trace_layer();
     let (req_headers_layer, resp_headers_layer) = telemetry::sensitive_headers_layers();
 
-    let request_id_layer = middleware::requiest_id_layer();
-    let propagate_request_id_layer = middleware::propagate_requiest_id_layer();
+    let request_id_layer = middleware::request_id_layer();
+    let propagate_request_id_layer = middleware::propagate_request_id_layer();
 
     let cors_layer = CorsLayer::new()
         .allow_origin(Any)
