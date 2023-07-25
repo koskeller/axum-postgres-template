@@ -1,11 +1,12 @@
 use axum::{extract::State, http::StatusCode, Json};
 use chrono::Utc;
+use serde::{Deserialize, Serialize};
 use tracing::log::{error, info};
 use uuid::Uuid;
 
 use crate::{errors::HTTPError, AppState};
 
-#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct ExamplePayload {
     ping: String,
 }
