@@ -13,6 +13,7 @@ async fn example_post_ok() {
         .fetch_one(&app.db)
         .await
         .expect("Failed to query db");
+
     assert_eq!(resp.id, 1);
     assert_eq!(resp.ping, "hello");
 }
