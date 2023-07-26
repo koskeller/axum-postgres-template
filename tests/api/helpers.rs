@@ -21,7 +21,7 @@ impl TestApp {
 
         TRACING.call_once(setup_tracing);
 
-        let cfg = Configuration::new().expect("Failed to read configuration");
+        let cfg = Configuration::new();
 
         let url = create_test_db(&cfg.db_dsn).await;
         let db = setup_db(&url, cfg.db_pool_max_size)
@@ -54,6 +54,7 @@ impl TestApp {
             .unwrap()
     }
 
+    #[allow(unused)]
     pub async fn put(&self, path: &str, body: &str) -> reqwest::Response {
         self.reqwest
             .put(self.url(path))

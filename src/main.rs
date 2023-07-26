@@ -2,23 +2,30 @@ use server::{setup_db, setup_tracing, Configuration};
 
 #[tokio::main]
 async fn main() -> Result<(), hyper::Error> {
-    // This returns an error if the `.env` file doesn't exist, but that's not what we want
-    // since we're not going to use a `.env` file if we deploy this application.
+    // Loads the .env file located in the environment's current directory or its parents in sequence.
+    // .env used only for development, so we discard error in all other cases.
     dotenv::dotenv().ok();
 
-    // Initialize tracing.
+    // Tries to load tracing config from environment (RUST_LOG) or uses "debug".
     setup_tracing();
 
-    // Parse our configuration from the environment.
-    let cfg = Configuration::new().expect("Failed to read configuration");
+    // Parse configuration from the environment.
+    tracing::debug!("Initializing configuration");
+    let cfg = Configuration::new();
 
-    // TODO move migrations somewhere else?
-    tracing::debug!("DB: Initializing pool");
-    let db = setup_db(&cfg.db_dsn, cfg.db_pool_max_size)
+    // Initialize db and run migrations.
+    tracing::debug!("Initializing db pool");
+    let db = setup_db(&cfg.db_dsn, cfg.db_pool_max_size).await;
+
+    // This embeds database migrations in the application binary so we can ensure the database
+    // is migrated correctly on startup.
+    tracing::debug!("Running migrations");
+    sqlx::migrate!("./migrations")
+        .run(&db)
         .await
-        .expect("Failed to setup db");
-    tracing::debug!("DB: Started");
+        .expect("Failed to run migrations");
 
-    // Finally, we spin up our API.
+    // Spin up our server.
+    tracing::info!("Starting server on {}...", cfg.listen_address);
     server::run(cfg, db).await
 }

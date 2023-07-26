@@ -8,11 +8,11 @@ COPY . .
 RUN cargo chef prepare  --recipe-path recipe.json
 
 FROM chef as builder
+ENV SQLX_OFFLINE true
 COPY --from=planner /app/recipe.json recipe.json
 # Build project dependencies, not our application!
 RUN cargo chef cook --release --recipe-path recipe.json
 COPY . .
-ENV SQLX_OFFLINE true
 # Build project
 RUN cargo build --release --bin server
 
@@ -25,5 +25,7 @@ RUN apt-get update -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /app/target/release/server server
+
 ENV APP_ENVIRONMENT production
+
 ENTRYPOINT ["./server"]

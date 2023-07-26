@@ -14,26 +14,33 @@ pub struct Configuration {
     pub app_port: u16,
 
     /// The DSN for the database. Only postgres is currently supported.
-    // pub db_dsn: String,
     pub db_dsn: String,
-    // The maximum number of connections for the PostgreSQL pool
+    // The maximum number of connections for the PostgreSQL pool.
     pub db_pool_max_size: u32,
 }
 
 impl Configuration {
-    pub fn new() -> anyhow::Result<Config> {
-        let app_port = var("PORT")?.parse::<u16>()?;
-        let db_dsn = var("DATABASE_URL")?;
-        let db_pool_max_size = var("DATABASE_POOL_MAX_SIZE")?.parse::<u32>()?;
+    pub fn new() -> Config {
+        let app_port = var("PORT")
+            .expect("Missing PORT environment variable")
+            .parse::<u16>()
+            .expect("Unable to parse the value of the PORT environment variable. Please make sure it is a valid unsigned 16-bit integer");
+
+        let db_dsn = var("DATABASE_URL").expect("Missing DATABASE_URL environment variable");
+
+        let db_pool_max_size = var("DATABASE_POOL_MAX_SIZE")
+            .expect("Missing DATABASE_POOL_MAX_SIZE environment variable")
+            .parse::<u32>()
+            .expect("Unable to parse the value of the DATABASE_POOL_MAX_SIZE environment variable. Please make sure it is a valid unsigned 32-bit integer.");
 
         let listen_address = SocketAddr::from((Ipv6Addr::UNSPECIFIED, app_port));
 
-        Ok(Arc::new(Configuration {
+        Arc::new(Configuration {
             listen_address,
             app_port,
             db_dsn,
             db_pool_max_size,
-        }))
+        })
     }
 
     pub fn set_dsn(&mut self, db_dsn: String) {
