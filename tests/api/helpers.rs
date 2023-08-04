@@ -34,6 +34,11 @@ impl TestApp {
         let db = setup_db(&url, cfg.db_pool_max_size)
             .await
             .expect("Failed to initialize test db");
+        // Run migrations.
+        sqlx::migrate!("./migrations")
+            .run(&db)
+            .await
+            .expect("Failed to run migrations");
 
         // Reqwest client for integration tests.
         let reqwest = reqwest::Client::new();
