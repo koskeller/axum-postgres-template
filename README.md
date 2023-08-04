@@ -1,7 +1,5 @@
 # Axum + Postgres Skeleton Application
 
-## Overview
-
 This repository contains a skeleton application built using [Axum](https://github.com/tokio-rs/axum) and [PostgreSQL](https://www.postgresql.org/). It serves as a starting point for creating a new Axum server. 
 
 Inspired by [Zero To Production In Rust](https://www.zero2prod.com) and [realworld-axum-sqlx](https://github.com/launchbadge/realworld-axum-sqlx).
@@ -44,7 +42,11 @@ $ cd axum-postgres-skeleton
 
 ### Configure the Application
 
-The backend application is preferably configured via environment variables. To simplify the process during development, we can use [.env files] to avoid defining the variables each time. As a starting point, you can simply copy the sample `.env` file in this repo (`cp .env.sample .env`) and modify the `.env` file as per the comments therein.
+The backend application is preferably configured via environment variables. To simplify the process during development, we can use `.env` files to avoid defining the variables each time. As a starting point, you can simply copy the sample `.env` file in this repo and modify the `.env` file as per the comments therein.
+
+```shell
+$ cp .env.sample .env
+```
 
 ### Set Up the Application Database
 
@@ -74,10 +76,11 @@ $ cargo run
 To start the server and autoreload on code changes:
 
 ```shell
+$ cargo install cargo-watch
 $ cargo watch -q -x run
 ```
 
-To format .json logs (using [`jq`](https://github.com/jqlang/jq)):
+To format `.json` logs using [`jq`](https://github.com/jqlang/jq):
 
 ```shell
 $ cargo watch -q -x run | jq .
