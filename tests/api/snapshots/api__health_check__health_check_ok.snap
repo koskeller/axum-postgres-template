@@ -1,7 +1,0 @@
----
-source: tests/api/health_check.rs
-expression: "resp.json::<Value>().await.unwrap()"
----
-Object {
-    "status": String("ok"),
-}

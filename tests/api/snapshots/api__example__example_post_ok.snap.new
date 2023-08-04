@@ -1,9 +1,0 @@
----
-source: tests/api/example.rs
-assertion_line: 18
-expression: resp
----
-Record {
-    id: 1,
-    ping: "hello",
-}
