@@ -1,9 +1,9 @@
-use sqlx::{postgres::PgPoolOptions, PgPool};
+use sqlx::{postgres::PgPoolOptions, Error, PgPool};
 use std::time::Duration;
 
 // We create a single connection pool for SQLx that's shared across the whole application.
 // This saves us from opening a new connection for every API call, which is wasteful.
-pub async fn setup_db(dsn: &str, pool_max_size: u32) -> PgPool {
+pub async fn setup_db(dsn: &str, pool_max_size: u32) -> Result<PgPool, Error> {
     let pool = PgPoolOptions::new()
         // The default connection limit for a Postgres server is 100 connections, minus 3 for superusers.
         // Since we're using the default superuser we don't have to worry about this too much,
@@ -14,7 +14,6 @@ pub async fn setup_db(dsn: &str, pool_max_size: u32) -> PgPool {
         .max_connections(pool_max_size)
         .acquire_timeout(Duration::from_secs(3))
         .connect(dsn)
-        .await
-        .expect("Failed to setup Postgres Pool");
+        .await;
     pool
 }

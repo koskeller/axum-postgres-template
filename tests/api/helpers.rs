@@ -26,7 +26,7 @@ impl TestApp {
         let url = create_test_db(&cfg.db_dsn).await;
         let db = setup_db(&url, cfg.db_pool_max_size)
             .await
-            .expect("Failed to configure test db");
+            .expect("Failed to initialize test db");
 
         let reqwest = reqwest::Client::new();
 

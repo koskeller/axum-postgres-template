@@ -36,6 +36,3 @@ uuid = { version = "1.4.0", features = ["v4"] }
 dotenv = "0.15"
 thiserror = "1.0.43"
 anyhow = "1.0.71"
-
-[dev-dependencies]
-insta = { version = "1.31.0", features = ["yaml"] }

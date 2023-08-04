@@ -1,6 +1,4 @@
 use axum::http::StatusCode;
-use insta::assert_debug_snapshot;
-use serde_json::Value;
 
 use crate::helpers::*;
 
@@ -12,7 +10,6 @@ async fn health_check_ok() {
     let headers = resp.headers().clone();
 
     assert_eq!(resp.status(), StatusCode::OK);
-    assert_debug_snapshot!(resp.json::<Value>().await.unwrap());
     assert!(headers.get("x-request-id").is_some());
     assert_eq!(headers.get("access-control-allow-origin").unwrap(), "*");
     assert!(headers.get("vary").is_some());

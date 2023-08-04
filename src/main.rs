@@ -13,9 +13,11 @@ async fn main() -> Result<(), hyper::Error> {
     tracing::debug!("Initializing configuration");
     let cfg = Configuration::new();
 
-    // Initialize db and run migrations.
+    // Initialize db pool.
     tracing::debug!("Initializing db pool");
-    let db = setup_db(&cfg.db_dsn, cfg.db_pool_max_size).await;
+    let db = setup_db(&cfg.db_dsn, cfg.db_pool_max_size)
+        .await
+        .expect("Failed to initialize db");
 
     // This embeds database migrations in the application binary so we can ensure the database
     // is migrated correctly on startup.
