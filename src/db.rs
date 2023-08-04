@@ -1,5 +1,4 @@
 use sqlx::{postgres::PgPoolOptions, Error, PgPool};
-use std::time::Duration;
 
 // We create a single connection pool for SQLx that's shared across the whole application.
 // This saves us from opening a new connection for every API call, which is wasteful.
@@ -12,7 +11,6 @@ pub async fn setup_db(dsn: &str, pool_max_size: u32) -> Result<PgPool, Error> {
         // If you're deploying your application with multiple replicas, then the total
         // across all replicas should not exceed the Postgres connection limit.
         .max_connections(pool_max_size)
-        .acquire_timeout(Duration::from_secs(3))
         .connect(dsn)
         .await;
     pool

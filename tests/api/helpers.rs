@@ -14,20 +14,28 @@ pub struct TestApp {
 
 impl TestApp {
     pub async fn new() -> Self {
+        // Loads the .env file located in the environment's current directory or its parents in sequence.
+        // .env used only for development, so we discard error in all other cases.
         dotenv::dotenv().ok();
 
-        // We set port to 0 so tests can spawn multiple servers on OS assigned ports.
+        // Set port to 0 so tests can spawn multiple servers on OS assigned ports.
         std::env::set_var("PORT", "0");
 
+        // The default timeout value is set to 15 seconds. Once.
         TRACING.call_once(setup_tracing);
 
+        // Parse configuration from the environment.
+        // This will exit with a help message if something is wrong.
         let cfg = Configuration::new();
 
+        // Creates db with a random name for tests.
         let url = create_test_db(&cfg.db_dsn).await;
+        // Initialize test db pool.
         let db = setup_db(&url, cfg.db_pool_max_size)
             .await
             .expect("Failed to initialize test db");
 
+        // Reqwest client for integration tests.
         let reqwest = reqwest::Client::new();
 
         let server = run(cfg, db.clone());
@@ -36,14 +44,17 @@ impl TestApp {
         Self { db, addr, reqwest }
     }
 
+    /// Builds url from provided path.
     pub fn url(&self, path: &str) -> String {
         format!("{}{}", self.addr, path)
     }
 
+    /// Makes GET request.
     pub async fn get(&self, path: &str) -> reqwest::Response {
         self.reqwest.get(self.url(path)).send().await.unwrap()
     }
 
+    /// Makes POST request.
     pub async fn post(&self, path: &str, body: &str) -> reqwest::Response {
         self.reqwest
             .post(self.url(path))
@@ -55,6 +66,7 @@ impl TestApp {
     }
 
     #[allow(unused)]
+    /// Makes POST request.
     pub async fn put(&self, path: &str, body: &str) -> reqwest::Response {
         self.reqwest
             .put(self.url(path))
@@ -66,6 +78,7 @@ impl TestApp {
     }
 }
 
+/// Creates db with a random name for tests.
 pub async fn create_test_db(db_dsn: &str) -> String {
     let randon_db_name = Uuid::new_v4().to_string();
     let db_url = format!("{}/{}", &db_dsn, randon_db_name);

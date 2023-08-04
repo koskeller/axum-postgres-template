@@ -10,6 +10,7 @@ async fn main() -> Result<(), hyper::Error> {
     setup_tracing();
 
     // Parse configuration from the environment.
+    // This will exit with a help message if something is wrong.
     tracing::debug!("Initializing configuration");
     let cfg = Configuration::new();
 
@@ -28,6 +29,6 @@ async fn main() -> Result<(), hyper::Error> {
         .expect("Failed to run migrations");
 
     // Spin up our server.
-    tracing::info!("Starting server on {}...", cfg.listen_address);
+    tracing::info!("Starting server on {}", cfg.listen_address);
     server::run(cfg, db).await
 }

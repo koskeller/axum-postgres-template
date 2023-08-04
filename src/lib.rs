@@ -1,11 +1,7 @@
 use axum::{routing::IntoMakeService, Router, Server};
 use hyper::server::conn::AddrIncoming;
 use sqlx::PgPool;
-use std::{sync::Arc, time::Duration};
-use tower_http::{
-    cors::{AllowHeaders, Any, CorsLayer},
-    timeout::TimeoutLayer,
-};
+use std::sync::Arc;
 
 mod cfg;
 pub use cfg::*;
@@ -28,19 +24,27 @@ pub fn run(cfg: Config, db: PgPool) -> Server<AddrIncoming, IntoMakeService<Rout
     let addr = cfg.listen_address.clone();
     let app_state = AppState { db, cfg };
 
+    // Middleware that adds high level tracing to a Service.
+    // Trace comes with good defaults but also supports customizing many aspects of the output:
+    // https://docs.rs/tower-http/latest/tower_http/trace/index.html
     let trace_layer = telemetry::trace_layer();
+
+    // Hiding sensitive headers is a good security practice as it prevents sensitive information
+    // such as authorization tokens and cookies from being leaked to unauthorized parties.
     let (req_headers_layer, resp_headers_layer) = telemetry::sensitive_headers_layers();
 
+    // Sets 'x-request-id' header with randomly generated uuid v4.
     let request_id_layer = middleware::request_id_layer();
+
+    // Propagates 'x-request-id' header from the request to the response.
     let propagate_request_id_layer = middleware::propagate_request_id_layer();
 
-    let cors_layer = CorsLayer::new()
-        .allow_origin(Any)
-        .allow_methods(Any)
-        .allow_headers(AllowHeaders::mirror_request())
-        .max_age(Duration::from_secs(600));
+    // Layer that applies the Cors middleware which adds headers for CORS.
+    let cors_layer = middleware::cors_layer();
 
-    let timeout_layer = TimeoutLayer::new(Duration::from_secs(10));
+    // Layer that applies the Timeout middleware which apply a timeout to requests.
+    // Default value is 15 seconds.
+    let timeout_layer = middleware::timeout_layer();
 
     let app = Router::new()
         .merge(routes::router())

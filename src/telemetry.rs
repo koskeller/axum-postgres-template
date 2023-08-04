@@ -15,7 +15,6 @@ use tracing_subscriber::{fmt, layer::SubscriberExt, util::SubscriberInitExt, Env
 pub fn setup_tracing() {
     let env_filter_layer = EnvFilter::try_from_default_env().unwrap_or_else(|_| "debug".into());
     let formatting_layer = fmt::layer().json();
-
     tracing_subscriber::registry()
         .with(env_filter_layer)
         .with(formatting_layer)
@@ -38,8 +37,8 @@ pub fn trace_layer() -> TraceLayer<SharedClassifier<ServerErrorsAsFailures>> {
                 .level(Level::INFO),
         )
 }
-// Hiding sensitive headers is a good security practice as it prevents sensitive information
-// such as authorization tokens and cookies from being leaked to unauthorized parties.
+
+/// Middleware that marks headers as sensitive.
 pub fn sensitive_headers_layers() -> (
     SetSensitiveRequestHeadersLayer,
     SetSensitiveResponseHeadersLayer,

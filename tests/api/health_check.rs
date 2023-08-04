@@ -3,7 +3,7 @@ use axum::http::StatusCode;
 use crate::helpers::*;
 
 #[tokio::test]
-async fn health_check_ok() {
+async fn test_health_check_ok() {
     let app = TestApp::new().await;
 
     let resp = app.get("/health_check").await;
@@ -16,7 +16,7 @@ async fn health_check_ok() {
 }
 
 #[tokio::test]
-async fn db_connection_ok() {
+async fn test_db_connection_ok() {
     let app = TestApp::new().await;
     assert_eq!(app.db.size(), 1);
 }

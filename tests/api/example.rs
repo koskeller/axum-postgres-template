@@ -3,7 +3,7 @@ use axum::http::StatusCode;
 use crate::helpers::*;
 
 #[tokio::test]
-async fn example_post_ok() {
+async fn test_example_post_ok() {
     let app = TestApp::new().await;
 
     let resp = app.post("/example", r#"{ "ping": "hello" }"#).await;
