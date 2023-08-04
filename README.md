@@ -29,23 +29,11 @@ $ cargo install sqlx-cli --features postgres
 
 ### Run Postgres
 
-The most straightforward way to run Postgres is by using a container with [a pre-built image][docker-postgres]. The command below will start version 15 of Postgres (the latest at the time of writing) using [Docker] (this command should also work with [Podman], a daemonless FOSS alternative).
+The most straightforward way to run Postgres is by using a container with a pre-built image. The command below will start latest version of Postgres using [Docker](https://www.docker.com/):
 
 ```shell
-$ docker run -d --name postgres-15 -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:15
+$ docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=password postgres
 ```
-
-Replace `{password}` with a password of your choice.
-
-Ensure the Postgres server is running:
-
-```shell
-$ docker ps
-```
-
-[docker-postgres]: https://hub.docker.com/_/postgres
-[Docker]: https://www.docker.com/
-[Podman]: https://podman.io/
 
 ### Clone this Repository
 
@@ -64,6 +52,13 @@ With `sqlx-cli` installed and your `.env` file set up, you only need to run the 
 
 ```shell
 $ sqlx db setup
+```
+
+### Sqlx offline mode
+To avoid the need of having a development database around to compile the project even when no modifications (to the database-accessing parts of the code) are done, this projects enables "offline mode" to cache the results of the SQL query analysis using the sqlx command-line tool. See [sqlx-cli/README.md](https://github.com/launchbadge/sqlx/blob/main/sqlx-cli/README.md#enable-building-in-offline-mode-with-query) for more details.
+
+```shell
+$ cargo sqlx prepare
 ```
 
 ### Starting the Application

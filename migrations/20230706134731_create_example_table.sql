@@ -1,4 +1,3 @@
--- Add migration script here
 CREATE TABLE IF NOT EXISTS example (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     uid uuid NOT NULL,
