@@ -18,5 +18,5 @@ async fn test_health_check_ok() {
 #[tokio::test]
 async fn test_db_connection_ok() {
     let app = TestApp::new().await;
-    assert_eq!(app.db.size(), 1);
+    assert_eq!(app.db.pool.size(), 1);
 }

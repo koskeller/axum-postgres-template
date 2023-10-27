@@ -1,14 +1,14 @@
-use sqlx::{Connection, Executor, PgConnection, PgPool};
+use sqlx::{Connection, Executor, PgConnection};
 use std::sync::Once;
 use uuid::Uuid;
 
-use server::{run, setup_db, setup_tracing, Configuration};
+use server::{run, setup_tracing, Configuration, Db};
 
 static TRACING: Once = Once::new();
 
 pub struct TestApp {
     pub addr: String,
-    pub db: PgPool,
+    pub db: Db,
     pub reqwest: reqwest::Client,
 }
 
@@ -29,16 +29,14 @@ impl TestApp {
         let cfg = Configuration::new();
 
         // Creates db with a random name for tests.
-        let url = create_test_db(&cfg.db_dsn).await;
+        let db_dsn = create_test_db(&cfg.db_dsn).await;
         // Initialize test db pool.
-        let db = setup_db(&url, cfg.db_pool_max_size)
+        let db = Db::new(&db_dsn, cfg.db_pool_max_size)
             .await
-            .expect("Failed to initialize test db");
-        // Run migrations.
-        sqlx::migrate!("./migrations")
-            .run(&db)
-            .await
-            .expect("Failed to run migrations");
+            .expect("Failed to initialize db");
+
+        tracing::debug!("Running migrations");
+        db.migrate().await.expect("Failed to run migrations");
 
         // Reqwest client for integration tests.
         let reqwest = reqwest::Client::new();

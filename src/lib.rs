@@ -1,6 +1,5 @@
 use axum::{routing::IntoMakeService, Router, Server};
 use hyper::server::conn::AddrIncoming;
-use sqlx::PgPool;
 use std::sync::Arc;
 
 mod cfg;
@@ -16,11 +15,11 @@ mod routes;
 
 #[derive(Clone)]
 pub struct AppState {
-    pub db: PgPool,
+    pub db: Db,
     pub cfg: Arc<Configuration>,
 }
 
-pub fn run(cfg: Config, db: PgPool) -> Server<AddrIncoming, IntoMakeService<Router>> {
+pub fn run(cfg: Config, db: Db) -> Server<AddrIncoming, IntoMakeService<Router>> {
     let addr = cfg.listen_address;
     let app_state = AppState { db, cfg };
 
