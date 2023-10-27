@@ -21,7 +21,7 @@ pub struct AppState {
 }
 
 pub fn run(cfg: Config, db: PgPool) -> Server<AddrIncoming, IntoMakeService<Router>> {
-    let addr = cfg.listen_address.clone();
+    let addr = cfg.listen_address;
     let app_state = AppState { db, cfg };
 
     // Middleware that adds high level tracing to a Service.

@@ -24,7 +24,7 @@ impl MakeRequestId for Id {
 /// on requests or responses.
 pub fn request_id_layer() -> SetRequestIdLayer<Id> {
     let x_request_id = HeaderName::from_static("x-request-id");
-    SetRequestIdLayer::new(x_request_id.clone(), Id::default())
+    SetRequestIdLayer::new(x_request_id.clone(), Id)
 }
 
 // Propagates 'x-request-id' header from the request to the response.
