@@ -21,7 +21,7 @@ impl TestApp {
         // Set port to 0 so tests can spawn multiple servers on OS assigned ports.
         std::env::set_var("PORT", "0");
 
-        // The default timeout value is set to 15 seconds. Once.
+        // Setup tracing. Once.
         TRACING.call_once(setup_tracing);
 
         // Parse configuration from the environment.
