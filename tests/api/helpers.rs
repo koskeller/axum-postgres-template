@@ -1,13 +1,15 @@
+use axum::{body::Body, http::Request, http::Response, Router};
 use sqlx::{Connection, Executor, PgConnection};
 use std::sync::Once;
+use tower::ServiceExt;
 use uuid::Uuid;
 
-use server::{run, setup_tracing, Configuration, Db};
+use server::{router, setup_tracing, Configuration, Db};
 
 static TRACING: Once = Once::new();
 
 pub struct TestApp {
-    pub addr: String,
+    pub router: Router,
     pub db: Db,
     pub reqwest: reqwest::Client,
 }
@@ -41,43 +43,16 @@ impl TestApp {
         // Reqwest client for integration tests.
         let reqwest = reqwest::Client::new();
 
-        let server = run(cfg, db.clone());
-        let addr = format!("http://{}", server.local_addr());
-        let _ = tokio::spawn(server);
-        Self { db, addr, reqwest }
+        let app = router(cfg, db.clone());
+        Self {
+            db,
+            router: app,
+            reqwest,
+        }
     }
 
-    /// Builds url from provided path.
-    pub fn url(&self, path: &str) -> String {
-        format!("{}{}", self.addr, path)
-    }
-
-    /// Makes GET request.
-    pub async fn get(&self, path: &str) -> reqwest::Response {
-        self.reqwest.get(self.url(path)).send().await.unwrap()
-    }
-
-    /// Makes POST request.
-    pub async fn post(&self, path: &str, body: &str) -> reqwest::Response {
-        self.reqwest
-            .post(self.url(path))
-            .body(body.to_string())
-            .header("Content-Type", "application/json")
-            .send()
-            .await
-            .unwrap()
-    }
-
-    #[allow(unused)]
-    /// Makes POST request.
-    pub async fn put(&self, path: &str, body: &str) -> reqwest::Response {
-        self.reqwest
-            .put(self.url(path))
-            .body(body.to_string())
-            .header("Content-Type", "application/json")
-            .send()
-            .await
-            .unwrap()
+    pub async fn request(&self, req: Request<Body>) -> Response<Body> {
+        self.router.clone().oneshot(req).await.unwrap()
     }
 }
 

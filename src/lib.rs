@@ -1,5 +1,4 @@
-use axum::{routing::IntoMakeService, Router, Server};
-use hyper::server::conn::AddrIncoming;
+use axum::Router;
 use std::sync::Arc;
 
 mod cfg;
@@ -9,7 +8,6 @@ pub use telemetry::*;
 mod middleware;
 pub use middleware::*;
 mod db;
-mod errors;
 pub use db::*;
 mod routes;
 
@@ -19,8 +17,7 @@ pub struct AppState {
     pub cfg: Arc<Configuration>,
 }
 
-pub fn run(cfg: Config, db: Db) -> Server<AddrIncoming, IntoMakeService<Router>> {
-    let addr = cfg.listen_address;
+pub fn router(cfg: Config, db: Db) -> Router {
     let app_state = AppState { db, cfg };
 
     // Middleware that adds high level tracing to a Service.
@@ -45,7 +42,7 @@ pub fn run(cfg: Config, db: Db) -> Server<AddrIncoming, IntoMakeService<Router>>
     // Default value is 15 seconds.
     let timeout_layer = middleware::timeout_layer();
 
-    let app = Router::new()
+    let router = Router::new()
         .merge(routes::router())
         .layer(cors_layer)
         .layer(timeout_layer)
@@ -56,5 +53,5 @@ pub fn run(cfg: Config, db: Db) -> Server<AddrIncoming, IntoMakeService<Router>>
         .layer(request_id_layer)
         .with_state(app_state);
 
-    axum::Server::bind(&addr).serve(app.into_make_service())
+    router
 }

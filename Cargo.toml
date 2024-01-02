@@ -11,17 +11,19 @@ path = "src/main.rs"
 name = "server"
 
 [dependencies]
-tokio = { version = "1", features = ["full"] }
-hyper = "0.14.27"
-tower-http = { version = "0.4.1", features = ["trace", "timeout", "sensitive-headers", "request-id", "cors"] }
+tokio = { version = "1.35.0", features = ["full"] }
+
+axum = "0.7.3"
+hyper = "1.1.0"
 tower = { version = "0.4.13", features = []}
-axum = "0.6.18"
-sqlx = { version = "0.7.0", features = ["postgres", "runtime-tokio-rustls", "macros", "migrate", "chrono", "json", "uuid"] }
+tower-http = { version = "0.5.0", features = ["trace", "timeout", "sensitive-headers", "request-id", "cors"] }
 
-tracing = "0.1.37"
-tracing-subscriber = { version = "0.3.17", features = ["json", "env-filter"] }
+sqlx = { version = "0.7.3", features = ["postgres", "runtime-tokio-rustls", "macros", "migrate", "chrono", "json", "uuid"] }
 
-reqwest = { version = "0.11.18", default-features = false, features = ["json", "rustls-tls"] }
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["json", "env-filter"] }
+
+reqwest = { version = "0.11.22", default-features = false, features = ["json", "rustls-tls"] }
 chrono = { version = "0.4.26", features = ["serde"] }
 serde = { version = "1.0.171", features = ["derive"] }
 serde_json = "1.0.102"

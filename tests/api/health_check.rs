@@ -1,4 +1,7 @@
-use axum::http::StatusCode;
+use axum::{
+    body::Body,
+    http::{Request, StatusCode},
+};
 
 use crate::helpers::*;
 
@@ -6,7 +9,8 @@ use crate::helpers::*;
 async fn test_health_check_ok() {
     let app = TestApp::new().await;
 
-    let resp = app.get("/health_check").await;
+    let req = Request::get("/health_check").body(Body::empty()).unwrap();
+    let resp = app.request(req).await;
     let headers = resp.headers().clone();
 
     assert_eq!(resp.status(), StatusCode::OK);

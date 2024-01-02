@@ -1,7 +1,8 @@
 use server::{setup_tracing, Configuration, Db};
+use tokio::net::TcpListener;
 
 #[tokio::main]
-async fn main() -> Result<(), hyper::Error> {
+async fn main() {
     // Loads the .env file located in the environment's current directory or its parents in sequence.
     // .env used only for development, so we discard error in all other cases.
     dotenv::dotenv().ok();
@@ -25,5 +26,7 @@ async fn main() -> Result<(), hyper::Error> {
 
     // Spin up our server.
     tracing::info!("Starting server on {}", cfg.listen_address);
-    server::run(cfg, db).await
+    let listener = TcpListener::bind(&cfg.listen_address).await.unwrap();
+    let router = server::router(cfg, db);
+    axum::serve(listener, router).await.unwrap()
 }
