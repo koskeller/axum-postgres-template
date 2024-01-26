@@ -42,7 +42,9 @@ pub fn router(cfg: Config, db: Db) -> Router {
     // Default value is 15 seconds.
     let timeout_layer = middleware::timeout_layer();
 
-    let router = Router::new()
+    
+
+    Router::new()
         .merge(routes::router())
         .layer(cors_layer)
         .layer(timeout_layer)
@@ -51,7 +53,5 @@ pub fn router(cfg: Config, db: Db) -> Router {
         .layer(trace_layer)
         .layer(req_headers_layer)
         .layer(request_id_layer)
-        .with_state(app_state);
-
-    router
+        .with_state(app_state)
 }
