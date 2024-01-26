@@ -53,6 +53,6 @@ jobs:
       run: cargo test -- --nocapture
       env:
         DATABASE_URL: ${{ env.DATABASE_URL }}
-        DATABASE_URL: ${{ env.DATABASE_POOL_MAX_SIZE }}
+        DATABASE_POOL_MAX_SIZE : ${{ env.DATABASE_POOL_MAX_SIZE }}
         PORT: ${{ env.PORT }}
         APP_ENVIRONMENT: ${{ env.APP_ENVIRONMENT }}
