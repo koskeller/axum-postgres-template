@@ -14,21 +14,45 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  PORT: 8080
+  APP_ENVIRONMENT: development
+  DATABASE_URL: postgres://postgres:password@127.0.0.1:5432
+  DATABASE_POOL_MAX_SIZE: 50
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v3
     - uses: dtolnay/rust-toolchain@stable
     - uses: Swatinem/rust-cache@v2
 
-    - name: Run tests
-      run: cargo test --verbose
-
     - name: Run fmt
       run: cargo fmt --check
 
     - name: Run clippy
       run: cargo clippy --tests
+
+    - name: Run tests
+      run: cargo test -- --nocapture
+      env:
+        DATABASE_URL: ${{ env.DATABASE_URL }}
+        DATABASE_URL: ${{ env.DATABASE_POOL_MAX_SIZE }}
+        PORT: ${{ env.PORT }}
+        APP_ENVIRONMENT: ${{ env.APP_ENVIRONMENT }}
