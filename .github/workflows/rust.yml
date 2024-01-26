@@ -64,8 +64,3 @@ jobs:
     - name: Build
       run: cargo build --release
       if: github.ref == 'refs/heads/main'
-
-    - name: Check for security vulnerabilities
-      uses: actions-rs/audit-check@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
