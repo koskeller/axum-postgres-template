@@ -58,8 +58,11 @@ impl TestApp {
 
 /// Creates db with a random name for tests.
 pub async fn create_test_db(db_dsn: &str) -> String {
+    let db_dsn = db_dsn
+        .strip_suffix("example")
+        .expect("Failed to remove db name from dsn_url, should be 'example'");
     let randon_db_name = Uuid::new_v4().to_string();
-    let db_url = format!("{}/{}", &db_dsn, randon_db_name);
+    let db_url = format!("{}{}", &db_dsn, randon_db_name);
     let mut conn = PgConnection::connect(db_dsn)
         .await
         .expect("Failed to connect to Postgres");

@@ -14,7 +14,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  DATABASE_URL: postgres://postgres:password@localhost:5432/test
+  DATABASE_URL: postgres://postgres:password@localhost:5432/example
 
 jobs:
   test:
@@ -26,7 +26,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
-          POSTGRES_DB: test
+          POSTGRES_DB: example
         ports:
           - 5432:5432
         options: >-
