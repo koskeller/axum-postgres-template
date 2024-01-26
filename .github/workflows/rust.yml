@@ -14,10 +14,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  PORT: 8080
-  APP_ENVIRONMENT: development
-  DATABASE_URL: postgres://postgres:password@127.0.0.1:5432
-  DATABASE_POOL_MAX_SIZE: 50
+  DATABASE_URL: postgres://postgres:password@localhost:5432/test
 
 jobs:
   test:
@@ -40,19 +37,35 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: dtolnay/rust-toolchain@stable
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        override: true
+        components: rustfmt, clippy
+
     - uses: Swatinem/rust-cache@v2
 
-    - name: Run fmt
-      run: cargo fmt --check
+    - name: Check formatting
+      run: cargo fmt -- --check
 
-    - name: Run clippy
-      run: cargo clippy --tests
+    - name: Lint with clippy
+      run: cargo clippy -- -D warnings
 
     - name: Run tests
-      run: cargo test -- --nocapture
+      run: cargo test --verbose
       env:
-        DATABASE_URL: ${{ env.DATABASE_URL }}
-        DATABASE_POOL_MAX_SIZE : ${{ env.DATABASE_POOL_MAX_SIZE }}
-        PORT: ${{ env.PORT }}
-        APP_ENVIRONMENT: ${{ env.APP_ENVIRONMENT }}
+        PORT: 8080
+        APP_ENVIRONMENT: development
+        DATABASE_POOL_MAX_SIZE: 50
+
+    - name: Build
+      run: cargo build --release
+      if: github.ref == 'refs/heads/main'
+
+    - name: Check for security vulnerabilities
+      uses: actions-rs/audit-check@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
