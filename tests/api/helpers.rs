@@ -55,7 +55,7 @@ pub async fn create_test_db(db_dsn: &str) -> String {
     let db_dsn = db_dsn
         .strip_suffix(&db_name)
         .expect("Failed to remove db name from dsn_url");
-    let randon_db_name = Uuid::new_v4().to_string();
+    let randon_db_name = Uuid::now_v7().to_string();
     let db_url = format!("{}{}", &db_dsn, randon_db_name);
     let mut conn = PgConnection::connect(db_dsn)
         .await

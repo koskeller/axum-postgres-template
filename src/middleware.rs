@@ -13,7 +13,7 @@ pub struct Id;
 
 impl MakeRequestId for Id {
     fn make_request_id<B>(&mut self, _: &Request<B>) -> Option<RequestId> {
-        let id = uuid::Uuid::new_v4().to_string().parse().unwrap();
+        let id = uuid::Uuid::now_v7().to_string().parse().unwrap();
         Some(RequestId::new(id))
     }
 }

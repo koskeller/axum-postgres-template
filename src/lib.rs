@@ -19,7 +19,7 @@ pub struct AppState {
 pub fn router(cfg: Config, db: Db) -> Router {
     let app_state = AppState { db, cfg };
 
-    // Sets 'x-request-id' header with randomly generated uuid v4.
+    // Sets 'x-request-id' header with randomly generated uuid v7.
     let request_id_layer = middleware::request_id_layer();
 
     // Propagates 'x-request-id' header from the request to the response.
