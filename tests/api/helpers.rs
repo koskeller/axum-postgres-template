@@ -4,14 +4,13 @@ use std::sync::Once;
 use tower::ServiceExt;
 use uuid::Uuid;
 
-use server::{router, setup_tracing, Configuration, Db};
+use server::{router, telemetry, Configuration, Db};
 
 static TRACING: Once = Once::new();
 
 pub struct TestApp {
     pub router: Router,
     pub db: Db,
-    pub reqwest: reqwest::Client,
 }
 
 impl TestApp {
@@ -24,7 +23,7 @@ impl TestApp {
         std::env::set_var("PORT", "0");
 
         // Setup tracing. Once.
-        TRACING.call_once(setup_tracing);
+        TRACING.call_once(telemetry::setup_tracing);
 
         // Parse configuration from the environment.
         // This will exit with a help message if something is wrong.
@@ -40,15 +39,8 @@ impl TestApp {
         tracing::debug!("Running migrations");
         db.migrate().await.expect("Failed to run migrations");
 
-        // Reqwest client for integration tests.
-        let reqwest = reqwest::Client::new();
-
-        let app = router(cfg, db.clone());
-        Self {
-            db,
-            router: app,
-            reqwest,
-        }
+        let router = router(cfg, db.clone());
+        Self { db, router }
     }
 
     pub async fn request(&self, req: Request<Body>) -> Response<Body> {
@@ -58,9 +50,11 @@ impl TestApp {
 
 /// Creates db with a random name for tests.
 pub async fn create_test_db(db_dsn: &str) -> String {
+    let db_name =
+        std::env::var("DATABASE_NAME").expect("Missing DATABASE_NAME environment variable");
     let db_dsn = db_dsn
-        .strip_suffix("example")
-        .expect("Failed to remove db name from dsn_url, should be 'example'");
+        .strip_suffix(&db_name)
+        .expect("Failed to remove db name from dsn_url");
     let randon_db_name = Uuid::new_v4().to_string();
     let db_url = format!("{}{}", &db_dsn, randon_db_name);
     let mut conn = PgConnection::connect(db_dsn)
@@ -68,6 +62,6 @@ pub async fn create_test_db(db_dsn: &str) -> String {
         .expect("Failed to connect to Postgres");
     conn.execute(format!(r#"CREATE DATABASE "{}";"#, randon_db_name).as_str())
         .await
-        .expect("Failed to create database");
+        .expect("Failed to create test database");
     db_url
 }

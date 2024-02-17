@@ -1,4 +1,4 @@
-use server::{setup_tracing, Configuration, Db};
+use server::{telemetry, Configuration, Db};
 use tokio::net::TcpListener;
 
 #[tokio::main]
@@ -8,7 +8,7 @@ async fn main() {
     dotenv::dotenv().ok();
 
     // Tries to load tracing config from environment (RUST_LOG) or uses "debug".
-    setup_tracing();
+    telemetry::setup_tracing();
 
     // Parse configuration from the environment.
     // This will exit with a help message if something is wrong.
