@@ -37,8 +37,13 @@ pub fn router(cfg: Config, db: Db) -> Router {
     // Default value is 15 seconds.
     let timeout_layer = middleware::timeout_layer();
 
+    // Any trailing slashes from request paths will be removed. For example, a request with `/foo/`
+    // will be changed to `/foo` before reaching the inner service.
+    let normalize_path_layer = middleware::normalize_path_layer();
+
     Router::new()
         .merge(routes::router())
+        .layer(normalize_path_layer)
         .layer(cors_layer)
         .layer(timeout_layer)
         .layer(propagate_request_id_layer)

@@ -4,6 +4,7 @@ use axum::http::HeaderName;
 use hyper::Request;
 use tower_http::{
     cors::{AllowHeaders, Any, CorsLayer},
+    normalize_path::NormalizePathLayer,
     request_id::{MakeRequestId, PropagateRequestIdLayer, RequestId, SetRequestIdLayer},
     timeout::TimeoutLayer,
 };
@@ -49,4 +50,12 @@ pub fn cors_layer() -> CorsLayer {
 /// The default timeout value is set to 15 seconds.
 pub fn timeout_layer() -> TimeoutLayer {
     TimeoutLayer::new(Duration::from_secs(15))
+}
+
+/// Middleware that normalizes paths.
+///
+/// Any trailing slashes from request paths will be removed. For example, a request with `/foo/`
+/// will be changed to `/foo` before reaching the inner service.
+pub fn normalize_path_layer() -> NormalizePathLayer {
+    NormalizePathLayer::trim_trailing_slash()
 }
