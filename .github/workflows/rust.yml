@@ -60,6 +60,7 @@ jobs:
         PORT: 8080
         APP_ENVIRONMENT: development
         DATABASE_POOL_MAX_SIZE: 50
+        DATABASE_NAME: example
 
     - name: Build
       run: cargo build --release
