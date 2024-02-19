@@ -19,6 +19,11 @@ pub struct AppState {
 pub fn router(cfg: Config, db: Db) -> Router {
     let app_state = AppState { db, cfg };
 
+    // Middleware that adds high level tracing to a Service.
+    // Trace comes with good defaults but also supports customizing many aspects of the output:
+    // https://docs.rs/tower-http/latest/tower_http/trace/index.html
+    let trace_layer = telemetry::trace_layer();
+
     // Sets 'x-request-id' header with randomly generated uuid v7.
     let request_id_layer = middleware::request_id_layer();
 
@@ -37,6 +42,7 @@ pub fn router(cfg: Config, db: Db) -> Router {
         .layer(cors_layer)
         .layer(timeout_layer)
         .layer(propagate_request_id_layer)
+        .layer(trace_layer)
         .layer(request_id_layer)
         .with_state(app_state)
 }

@@ -1,3 +1,8 @@
+use tower_http::{
+    classify::{ServerErrorsAsFailures, SharedClassifier},
+    trace::{DefaultMakeSpan, DefaultOnRequest, DefaultOnResponse, TraceLayer},
+};
+use tracing::Level;
 use tracing_subscriber::{fmt, layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
 
 // The `EnvFilter` type is used to filter log events based on the value of an environment variable.
@@ -11,4 +16,14 @@ pub fn setup_tracing() {
         .with(env_filter_layer)
         .with(formatting_layer)
         .init()
+}
+
+/// Returns a `TraceLayer` for HTTP requests and responses.
+/// The `TraceLayer` is used to trace requests and responses in the application.
+/// It includes headers and sets the log level to `INFO`.
+pub fn trace_layer() -> TraceLayer<SharedClassifier<ServerErrorsAsFailures>> {
+    TraceLayer::new_for_http()
+        .make_span_with(DefaultMakeSpan::new().level(Level::INFO))
+        .on_request(DefaultOnRequest::new().level(Level::INFO))
+        .on_response(DefaultOnResponse::new().level(Level::INFO))
 }
