@@ -11,22 +11,22 @@ path = "src/main.rs"
 name = "server"
 
 [dependencies]
-tokio = { version = "1.36.0", features = ["full"] }
-axum = "0.7.4"
-hyper = "1.1.0"
+tokio = { version = "1.37.0", features = ["full"] }
+axum = "0.7.5"
+hyper = "1.2.0"
 tower = { version = "0.4.13", features = []}
 tower-http = { version = "0.5.1", features = ["trace", "timeout", "request-id", "cors", "normalize-path"] }
 
-sqlx = { version = "0.7.3", features = ["postgres", "runtime-tokio-rustls", "macros", "migrate", "chrono", "json", "uuid"] }
+sqlx = { version = "0.7.4", features = ["postgres", "runtime-tokio-rustls", "macros", "migrate", "chrono", "json", "uuid"] }
 
 tracing = "0.1.40"
 tracing-subscriber = { version = "0.3.18", features = ["json", "env-filter"] }
 
-reqwest = { version = "0.11.24", default-features = false, features = ["json", "rustls-tls"] }
-chrono = { version = "0.4.34", features = ["serde"] }
-serde = { version = "1.0.196", features = ["derive"] }
-serde_json = "1.0.113"
-uuid = { version = "1.7.0", features = ["v7", "serde"] }
+reqwest = { version = "0.12.2", default-features = false, features = ["json", "rustls-tls"] }
+chrono = { version = "0.4.37", features = ["serde"] }
+serde = { version = "1.0.197", features = ["derive"] }
+serde_json = "1.0.115"
+uuid = { version = "1.8.0", features = ["v7", "serde"] }
 
 dotenv = "0.15.0"
-anyhow = "1.0.79"
+anyhow = "1.0.81"
