@@ -1,8 +1,9 @@
 use axum::Router;
 use std::sync::Arc;
 
-mod cfg;
-mod db;
+pub mod api_error;
+pub mod cfg;
+pub mod db;
 pub mod middleware;
 pub mod routes;
 pub mod telemetry;
