@@ -5,7 +5,7 @@ use tokio::net::TcpListener;
 async fn main() {
     // Loads the .env file located in the environment's current directory or its parents in sequence.
     // .env used only for development, so we discard error in all other cases.
-    dotenv::dotenv().ok();
+    dotenvy::dotenv().ok();
 
     // Tries to load tracing config from environment (RUST_LOG) or uses "debug".
     telemetry::setup_tracing();

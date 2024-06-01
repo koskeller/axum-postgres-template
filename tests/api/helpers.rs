@@ -17,7 +17,7 @@ impl TestApp {
     pub async fn new() -> Self {
         // Loads the .env file located in the environment's current directory or its parents in sequence.
         // .env used only for development, so we discard error in all other cases.
-        dotenv::dotenv().ok();
+        dotenvy::dotenv().ok();
 
         // Set port to 0 so tests can spawn multiple servers on OS assigned ports.
         std::env::set_var("PORT", "0");
