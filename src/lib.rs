@@ -1,5 +1,4 @@
 use axum::Router;
-use std::sync::Arc;
 
 pub mod api_error;
 pub mod cfg;
@@ -14,7 +13,7 @@ pub use db::*;
 #[derive(Clone)]
 pub struct AppState {
     pub db: Db,
-    pub cfg: Arc<Configuration>,
+    pub cfg: Config,
 }
 
 pub fn router(cfg: Config, db: Db) -> Router {
@@ -34,16 +33,21 @@ pub fn router(cfg: Config, db: Db) -> Router {
     // Layer that applies the Cors middleware which adds headers for CORS.
     let cors_layer = middleware::cors_layer();
 
-    // Layer that applies the Timeout middleware which apply a timeout to requests.
-    // Default value is 15 seconds.
+    // Layer that applies the Timeout middleware, which sets a timeout for requests.
+    // The default value is 15 seconds.
     let timeout_layer = middleware::timeout_layer();
 
     // Any trailing slashes from request paths will be removed. For example, a request with `/foo/`
-    // will be changed to `/foo` before reaching the inner service.
+    // will be changed to `/foo` before reaching the internal service.
     let normalize_path_layer = middleware::normalize_path_layer();
 
+    // Create the router with the routes.
+    let router = routes::router();
+
+    // Combine all the routes and apply the middleware layers.
+    // The order of the layers is important. The first layer is the outermost layer.
     Router::new()
-        .merge(routes::router())
+        .merge(router)
         .layer(normalize_path_layer)
         .layer(cors_layer)
         .layer(timeout_layer)

@@ -26,7 +26,11 @@ async fn main() {
 
     // Spin up our server.
     tracing::info!("Starting server on {}", cfg.listen_address);
-    let listener = TcpListener::bind(&cfg.listen_address).await.unwrap();
+    let listener = TcpListener::bind(&cfg.listen_address)
+        .await
+        .expect("Failed to bind address");
     let router = server::router(cfg, db);
-    axum::serve(listener, router).await.unwrap()
+    axum::serve(listener, router)
+        .await
+        .expect("Failed to start server")
 }

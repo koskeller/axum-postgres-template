@@ -19,9 +19,9 @@ impl MakeRequestId for Id {
     }
 }
 
-/// Sets 'x-request-id' header with randomly generated uuid v4.
+/// Sets the 'x-request-id' header with a randomly generated UUID v7.
 ///
-/// SetRequestId wont override request ids if its already present
+/// SetRequestId will not override request IDs if they are already present
 /// on requests or responses.
 pub fn request_id_layer() -> SetRequestIdLayer<Id> {
     let x_request_id = HeaderName::from_static("x-request-id");

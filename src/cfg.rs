@@ -9,7 +9,7 @@ pub type Config = Arc<Configuration>;
 
 #[derive(Deserialize)]
 pub struct Configuration {
-    /// The environment to run the application in.
+    /// The environment in which to run the application.
     pub env: Environment,
 
     /// The address to listen on.
@@ -17,7 +17,7 @@ pub struct Configuration {
     /// The port to listen on.
     pub app_port: u16,
 
-    /// The DSN for the database. Only postgres is currently supported.
+    /// The DSN for the database. Currently, only PostgreSQL is supported.
     pub db_dsn: String,
     /// The maximum number of connections for the PostgreSQL pool.
     pub db_pool_max_size: u32,
@@ -58,7 +58,7 @@ impl Configuration {
     }
 
     /// Sets the database DSN.
-    /// This method is used from the tests to override the database DSN.
+    /// This method is used in tests to override the database DSN.
     pub fn set_dsn(&mut self, db_dsn: String) {
         self.db_dsn = db_dsn
     }
