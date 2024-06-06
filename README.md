@@ -86,6 +86,45 @@ To format `.json` logs using [`jq`](https://github.com/jqlang/jq):
 $ cargo watch -q -x run | jq .
 ```
 
+## Example
+
+```rust
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct ExampleReq {
+    pub input: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct ExampleResp {
+    pub output: String,
+}
+
+pub async fn example(
+    State(state): State<AppState>,
+    req: Result<Json<ExampleReq>, JsonRejection>,
+) -> Result<Json<ExampleResp>, ApiError> {
+    // Returns ApiError::InvalidJsonBody if the Axum built-in extractor
+    // returns an error.
+    let Json(req) = req?;
+
+    // Proceed with additional validation.
+    if req.input.is_empty() {
+        return Err(ApiError::InvalidRequest(
+            "'input' should not be empty".to_string(),
+        ));
+    }
+
+    // Anyhow errors are by default converted into ApiError::InternalError and assigned a 500 HTTP status code.
+    let data: anyhow::Result<()> = Err(anyhow!("Some internal error"));
+    let data = data?;
+
+    let resp = ExampleResp {
+        output: "hello".to_string(),
+    };
+    Ok(Json(resp))
+}
+```
+
 ## Contributing
 
 Contributions are always welcome! Feel free to check the current issues in this repository for tasks that need attention. If you find something missing or that could be improved, please open a new issue.
