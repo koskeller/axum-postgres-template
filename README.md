@@ -1,6 +1,6 @@
-# Axum + Postgres Skeleton Application
+# Axum + Postgres Application Template
 
-This repository contains a skeleton application built using [Axum](https://github.com/tokio-rs/axum) and [PostgreSQL](https://www.postgresql.org/). It serves as a starting point for creating a new Axum server. 
+This repository contains an application template built using [Axum](https://github.com/tokio-rs/axum) and [PostgreSQL](https://www.postgresql.org/). It serves as a starting point for creating a new Axum server. 
 
 Inspired by [Zero To Production In Rust](https://www.zero2prod.com) and [realworld-axum-sqlx](https://github.com/launchbadge/realworld-axum-sqlx).
 
@@ -36,8 +36,8 @@ $ docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=password postgres
 ### Clone this Repository
 
 ```shell
-$ git clone https://github.com/koskeller/axum-postgres-skeleton
-$ cd axum-postgres-skeleton
+$ git clone https://github.com/koskeller/axum-postgres-template
+$ cd axum-postgres-template
 ```
 
 ### Configure the Application
