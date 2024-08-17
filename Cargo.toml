@@ -16,6 +16,7 @@ axum = "0.7.5"
 hyper = "1.4.1"
 tower = { version = "0.4.13", features = [] }
 tower-http = { version = "0.5.2", features = [
+    "fs",
     "trace",
     "timeout",
     "request-id",
@@ -48,3 +49,4 @@ dotenvy = "0.15.7"
 
 anyhow = "1.0.86"
 thiserror = "1.0.63"
+leptos = { version = "0.6.14", features = ["ssr"] }

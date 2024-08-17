@@ -1,6 +1,6 @@
 # Axum + Postgres Application Template
 
-This repository contains an application template built using [Axum](https://github.com/tokio-rs/axum) and [PostgreSQL](https://www.postgresql.org/). It serves as a starting point for creating a new Axum server. 
+This repository contains an application template built using [Axum](https://github.com/tokio-rs/axum) and [PostgreSQL](https://www.postgresql.org/). It serves as a starting point for creating a new Axum server.
 
 Inspired by [Zero To Production In Rust](https://www.zero2prod.com) and [realworld-axum-sqlx](https://github.com/launchbadge/realworld-axum-sqlx).
 
@@ -123,6 +123,11 @@ pub async fn example(
     };
     Ok(Json(resp))
 }
+```
+
+## Tailwind
+``` shell
+$ npx tailwindcss -i ./public/tailwind.css -o ./public/styles.css --watch
 ```
 
 ## Contributing
