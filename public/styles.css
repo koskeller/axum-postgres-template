@@ -942,6 +942,10 @@ body {
   justify-content: center;
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
 .gap-1 {
   gap: 0.25rem;
 }
@@ -1418,6 +1422,10 @@ body {
   border-color: transparent;
 }
 
+.focus\:border-input:focus {
+  border-color: hsl(var(--input));
+}
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -1444,6 +1452,10 @@ body {
 
 .focus\:ring-primary:focus {
   --tw-ring-color: hsl(var(--primary));
+}
+
+.focus\:ring-muted-foreground:focus {
+  --tw-ring-color: hsl(var(--muted-foreground));
 }
 
 .focus\:ring-opacity-0:focus {
@@ -1573,6 +1585,13 @@ body {
 
 .\[\&\>li\]\:mt-2>li {
   margin-top: 0.5rem;
+}
+
+.\[\&\>span\]\:line-clamp-1>span {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
 .\[\&\>tr\]\:last\:border-b-0:last-child>tr {

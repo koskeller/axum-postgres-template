@@ -1,6 +1,6 @@
 use leptos::*;
 
-use crate::ui::{Button, Checkbox, Input, Label};
+use crate::ui::{Button, Checkbox, Input, Label, Select, SelectOption};
 
 #[component]
 pub fn SearchForm() -> impl IntoView {
@@ -41,6 +41,13 @@ pub fn SearchForm() -> impl IntoView {
             </div>
 
             <div class="flex items-center flex-wrap gap-2">{extensions}</div>
+
+            <Select>
+                <SelectOption text="All" value="all"/>
+                <SelectOption text="Starts with" value="starts_with"/>
+                <SelectOption text="Ends with" value="ends_with"/>
+                <SelectOption text="Contains" value="contains"/>
+            </Select>
 
             <Button attr:type="submit" class="w-full sm:w-[120px]">
                 "Search"

@@ -6,6 +6,7 @@ pub mod icons;
 pub mod input;
 pub mod label;
 pub mod pagination;
+pub mod select;
 pub mod skeleton;
 pub mod table;
 pub mod textarea;
@@ -19,7 +20,9 @@ pub use icons::*;
 pub use input::*;
 pub use label::*;
 pub use pagination::*;
+pub use select::*;
 pub use skeleton::*;
 pub use table::*;
 pub use textarea::*;
 pub use typography::*;
+
