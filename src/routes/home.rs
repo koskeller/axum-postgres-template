@@ -6,7 +6,7 @@ use crate::{
         Button, ButtonVariant, Card, CardContent, CardDescription, CardFooter, CardHeader,
         CardTitle, Checkbox, Pagination, PaginationContent, PaginationEllipsis, PaginationItem,
         PaginationLink, PaginationNext, PaginationPrevious, Skeleton, Table, TableBody,
-        TableCaption, TableCell, TableHead, TableHeader, TableRow,
+        TableCaption, TableCell, TableHead, TableHeader, TableRow, Textarea,
     },
     AppState,
 };
@@ -43,6 +43,8 @@ pub async fn page(State(_state): State<AppState>) -> Html<String> {
                 <Skeleton class="h-4 w-[200px]" />
               </div>
             </div>
+
+            <Textarea attr:placeholder="Type your message here." attr:disabled=true />
 
             <Table>
               <TableCaption>A list of your recent invoices.</TableCaption>

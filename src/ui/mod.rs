@@ -8,6 +8,7 @@ pub mod label;
 pub mod pagination;
 pub mod skeleton;
 pub mod table;
+pub mod textarea;
 
 pub use badge::*;
 pub use button::*;
@@ -19,3 +20,4 @@ pub use label::*;
 pub use pagination::*;
 pub use skeleton::*;
 pub use table::*;
+pub use textarea::*;
