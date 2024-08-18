@@ -5,14 +5,15 @@ use crate::{
     ui::{
         Button, ButtonVariant, Card, CardContent, CardDescription, CardFooter, CardHeader,
         CardTitle, Checkbox, Pagination, PaginationContent, PaginationEllipsis, PaginationItem,
-        PaginationLink, PaginationNext, PaginationPrevious, Skeleton,
+        PaginationLink, PaginationNext, PaginationPrevious, Skeleton, Table, TableBody,
+        TableCaption, TableCell, TableHead, TableHeader, TableRow,
     },
     AppState,
 };
 
 pub async fn page(State(_state): State<AppState>) -> Html<String> {
     crate::components::render(move || -> Fragment {
-        view! {
+        let fragment = view! {
             <Card class="mt-100">
                 <CardHeader>
                     <CardTitle>"Hello, world!"</CardTitle>
@@ -43,6 +44,27 @@ pub async fn page(State(_state): State<AppState>) -> Html<String> {
               </div>
             </div>
 
+            <Table>
+              <TableCaption>A list of your recent invoices.</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead class="w-[100px]">Invoice</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Method</TableHead>
+                  <TableHead class="text-right">Amount</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell class="font-medium">INV001</TableCell>
+                  <TableCell>Paid</TableCell>
+                  <TableCell>Credit Card</TableCell>
+                  <TableCell class="text-right">$250.00</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+
+
             <div>
                 <Pagination>
                 <PaginationContent>
@@ -62,6 +84,7 @@ pub async fn page(State(_state): State<AppState>) -> Html<String> {
                 </Pagination>
             </div>
 
-        }
+        };
+        fragment
     })
 }

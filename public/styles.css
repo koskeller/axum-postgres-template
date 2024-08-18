@@ -607,9 +607,17 @@ body {
   position: static;
 }
 
+.relative {
+  position: relative;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .flex {
@@ -618,6 +626,10 @@ body {
 
 .inline-flex {
   display: inline-flex;
+}
+
+.table {
+  display: table;
 }
 
 .hidden {
@@ -652,6 +664,10 @@ body {
   height: 125px;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .w-10 {
   width: 2.5rem;
 }
@@ -684,12 +700,20 @@ body {
   width: 250px;
 }
 
+.w-\[100px\] {
+  width: 100px;
+}
+
 .max-w-7xl {
   max-width: 80rem;
 }
 
 .shrink-0 {
   flex-shrink: 0;
+}
+
+.caption-bottom {
+  caption-side: bottom;
 }
 
 @keyframes pulse {
@@ -752,6 +776,10 @@ body {
   margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
 
+.overflow-auto {
+  overflow: auto;
+}
+
 .whitespace-nowrap {
   white-space: nowrap;
 }
@@ -778,6 +806,14 @@ body {
 
 .border {
   border-width: 1px;
+}
+
+.border-b {
+  border-bottom-width: 1px;
+}
+
+.border-t {
+  border-top-width: 1px;
 }
 
 .border-input {
@@ -816,8 +852,16 @@ body {
   background-color: hsl(var(--muted));
 }
 
+.bg-muted\/50 {
+  background-color: hsl(var(--muted) / 0.5);
+}
+
 .p-6 {
   padding: 1.5rem;
+}
+
+.p-4 {
+  padding: 1rem;
 }
 
 .px-2 {
@@ -874,6 +918,18 @@ body {
 
 .pr-2\.5 {
   padding-right: 0.625rem;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.align-middle {
+  vertical-align: middle;
 }
 
 .text-sm {
@@ -1021,6 +1077,10 @@ body {
   background-color: hsl(var(--primary) / 0.8);
 }
 
+.hover\:bg-muted\/50:hover {
+  background-color: hsl(var(--muted) / 0.5);
+}
+
 .hover\:text-accent-foreground:hover {
   color: hsl(var(--accent-foreground));
 }
@@ -1091,6 +1151,10 @@ body {
   background-color: hsl(var(--primary));
 }
 
+.data-\[state\=selected\]\:bg-muted[data-state="selected"] {
+  background-color: hsl(var(--muted));
+}
+
 .data-\[state\=checked\]\:text-primary-foreground[data-state="checked"] {
   color: hsl(var(--primary-foreground));
 }
@@ -1113,4 +1177,20 @@ body {
     padding-left: 2rem;
     padding-right: 2rem;
   }
+}
+
+.\[\&\:has\(\[role\=checkbox\]\)\]\:pr-0:has([role=checkbox]) {
+  padding-right: 0px;
+}
+
+.\[\&\>tr\]\:last\:border-b-0:last-child>tr {
+  border-bottom-width: 0px;
+}
+
+.\[\&_tr\:last-child\]\:border-0 tr:last-child {
+  border-width: 0px;
+}
+
+.\[\&_tr\]\:border-b tr {
+  border-bottom-width: 1px;
 }

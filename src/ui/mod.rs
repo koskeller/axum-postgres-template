@@ -7,6 +7,7 @@ pub mod input;
 pub mod label;
 pub mod pagination;
 pub mod skeleton;
+pub mod table;
 
 pub use badge::*;
 pub use button::*;
@@ -17,3 +18,4 @@ pub use input::*;
 pub use label::*;
 pub use pagination::*;
 pub use skeleton::*;
+pub use table::*;
