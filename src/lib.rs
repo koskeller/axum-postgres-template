@@ -4,14 +4,16 @@ pub mod api_error;
 pub mod cfg;
 pub mod components;
 pub mod db;
+pub mod metadata;
 pub mod middleware;
+pub mod render;
 pub mod routes;
 pub mod telemetry;
 pub mod ui;
-pub mod metadata;
 
 pub use cfg::*;
 pub use db::*;
+pub use render::*;
 
 #[derive(Clone)]
 pub struct AppState {
@@ -59,3 +61,4 @@ pub fn router(cfg: Config, db: Db) -> Router {
         .layer(request_id_layer)
         .with_state(app_state)
 }
+
