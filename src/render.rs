@@ -8,11 +8,12 @@ where
     F: FnOnce() -> N + 'static,
     N: IntoView + 'static,
 {
-    Html(
-        leptos::ssr::render_to_string(move || {
-            view! { <Layout>{f()}</Layout> }
-        })
-        .to_string(),
-    )
+    let html = leptos::ssr::render_to_string(move || {
+        view! { <Layout>{f()}</Layout> }
+    })
+    .to_string();
+    // TODO find a better way
+    let html = format!("<!DOCTYPE html>{}", html);
+    Html(html)
 }
 
