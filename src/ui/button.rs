@@ -53,7 +53,7 @@ impl ButtonSize {
 pub fn Button(
     #[prop(optional, default = ButtonVariant::Default)] variant: ButtonVariant,
     #[prop(optional, default = ButtonSize::Default)] size: ButtonSize,
-    #[prop(optional)] class: &'static str,
+    #[prop(optional, into)] class: String,
     #[prop(attrs)] attributes: Vec<(&'static str, Attribute)>,
     children: Children,
 ) -> impl IntoView {

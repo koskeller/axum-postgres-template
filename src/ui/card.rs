@@ -3,7 +3,7 @@ use tailwind_fuse::*;
 
 #[component]
 pub fn Card(
-    #[prop(optional)] class: &'static str,
+    #[prop(optional, into)] class: String,
     #[prop(attrs)] attributes: Vec<(&'static str, Attribute)>,
     children: Children,
 ) -> impl IntoView {
@@ -20,7 +20,7 @@ pub fn Card(
 
 #[component]
 pub fn CardHeader(
-    #[prop(optional)] class: &'static str,
+    #[prop(optional, into)] class: String,
     #[prop(attrs)] attributes: Vec<(&'static str, Attribute)>,
     children: Children,
 ) -> impl IntoView {
@@ -34,7 +34,7 @@ pub fn CardHeader(
 
 #[component]
 pub fn CardTitle(
-    #[prop(optional)] class: &'static str,
+    #[prop(optional, into)] class: String,
     #[prop(attrs)] attributes: Vec<(&'static str, Attribute)>,
     children: Children,
 ) -> impl IntoView {
@@ -48,7 +48,7 @@ pub fn CardTitle(
 
 #[component]
 pub fn CardDescription(
-    #[prop(optional)] class: &'static str,
+    #[prop(optional, into)] class: String,
     #[prop(attrs)] attributes: Vec<(&'static str, Attribute)>,
     children: Children,
 ) -> impl IntoView {
@@ -62,7 +62,7 @@ pub fn CardDescription(
 
 #[component]
 pub fn CardContent(
-    #[prop(optional)] class: &'static str,
+    #[prop(optional, into)] class: String,
     #[prop(attrs)] attributes: Vec<(&'static str, Attribute)>,
     children: Children,
 ) -> impl IntoView {
@@ -76,7 +76,7 @@ pub fn CardContent(
 
 #[component]
 pub fn CardFooter(
-    #[prop(optional)] class: &'static str,
+    #[prop(optional, into)] class: String,
     #[prop(attrs)] attributes: Vec<(&'static str, Attribute)>,
     children: Children,
 ) -> impl IntoView {

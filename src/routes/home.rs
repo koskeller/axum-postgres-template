@@ -4,7 +4,7 @@ use leptos::*;
 use crate::{
     ui::{
         Button, ButtonVariant, Card, CardContent, CardDescription, CardFooter, CardHeader,
-        CardTitle,
+        CardTitle, Checkbox,
     },
     AppState,
 };
@@ -17,7 +17,9 @@ pub async fn page(State(_state): State<AppState>) -> Html<String> {
                     <CardTitle>"Hello, world!"</CardTitle>
                     <CardDescription>"This is a card component."</CardDescription>
                 </CardHeader>
-                <CardContent>"Hello, world!"</CardContent>
+                <CardContent>
+                    <Checkbox id="1" label="Accept terms" />
+                </CardContent>
                 <CardFooter>
                     <Button>"Hello"</Button>
                 </CardFooter>

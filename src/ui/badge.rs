@@ -23,7 +23,7 @@ impl BadgeVariant {
 #[component]
 pub fn Badge(
     #[prop(optional, default = BadgeVariant::Default)] variant: BadgeVariant,
-    #[prop(optional)] class: &'static str,
+    #[prop(optional, into)] class: String,
     #[prop(attrs)] attributes: Vec<(&'static str, Attribute)>,
     children: Children,
 ) -> impl IntoView {
