@@ -5,7 +5,7 @@ use crate::{
     ui::{
         Button, ButtonVariant, Card, CardContent, CardDescription, CardFooter, CardHeader,
         CardTitle, Checkbox, Pagination, PaginationContent, PaginationEllipsis, PaginationItem,
-        PaginationLink, PaginationNext, PaginationPrevious,
+        PaginationLink, PaginationNext, PaginationPrevious, Skeleton,
     },
     AppState,
 };
@@ -33,6 +33,14 @@ pub async fn page(State(_state): State<AppState>) -> Html<String> {
             <Button variant=ButtonVariant::Outline>"Hello"</Button>
             <Button variant=ButtonVariant::Secondary>"Hello"</Button>
             <Button variant=ButtonVariant::Destructive>"Hello"</Button>
+            </div>
+
+            <div class="flex flex-col space-y-3">
+              <Skeleton class="h-[125px] w-[250px] rounded-xl" />
+              <div class="space-y-2">
+                <Skeleton class="h-4 w-[250px]" />
+                <Skeleton class="h-4 w-[200px]" />
+              </div>
             </div>
 
             <div>
