@@ -9,6 +9,7 @@ pub mod pagination;
 pub mod skeleton;
 pub mod table;
 pub mod textarea;
+pub mod typography;
 
 pub use badge::*;
 pub use button::*;
@@ -21,3 +22,4 @@ pub use pagination::*;
 pub use skeleton::*;
 pub use table::*;
 pub use textarea::*;
+pub use typography::*;
