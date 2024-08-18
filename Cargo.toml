@@ -22,6 +22,11 @@ tower-http = { version = "0.5.2", features = [
     "request-id",
     "cors",
     "normalize-path",
+    "normalize-path",
+    "compression-br",
+    "compression-deflate",
+    "compression-gzip",
+    "compression-zstd",
 ] }
 
 sqlx = { version = "0.8.0", features = [

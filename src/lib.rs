@@ -14,6 +14,7 @@ pub mod ui;
 pub use cfg::*;
 pub use db::*;
 pub use render::*;
+use tower_http::compression::CompressionLayer;
 
 #[derive(Clone)]
 pub struct AppState {
@@ -49,10 +50,14 @@ pub fn router(cfg: Config, db: Db) -> Router {
     // Create the router with the routes.
     let router = routes::router();
 
+    // Layer that applies the Compression middleware, which compresses the response body.
+    let compression = CompressionLayer::new();
+
     // Combine all the routes and apply the middleware layers.
     // The order of the layers is important. The first layer is the outermost layer.
     Router::new()
         .merge(router)
+        .layer(compression)
         .layer(normalize_path_layer)
         .layer(cors_layer)
         .layer(timeout_layer)

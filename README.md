@@ -126,8 +126,19 @@ pub async fn example(
 ```
 
 ## Tailwind
+Install Tailwind CSS using npm:
 ``` shell
-$ npx tailwindcss -i ./public/tailwind.css -o ./public/styles.css --watch
+$ npm install -G tailwindcss
+```
+
+Install @tailwindcss/forms plugin:
+``` shell
+$ npm install
+```
+
+Start Tailwind CSS in watch mode:
+``` shell
+$ npx tailwindcss -i ./public/tailwind.css -o ./public/styles.css --minify --watch
 ```
 
 ## Contributing
