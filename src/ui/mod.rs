@@ -1,3 +1,4 @@
+pub mod alert;
 pub mod badge;
 pub mod button;
 pub mod card;
@@ -13,6 +14,7 @@ pub mod table;
 pub mod textarea;
 pub mod typography;
 
+pub use alert::*;
 pub use badge::*;
 pub use button::*;
 pub use card::*;

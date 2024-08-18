@@ -844,6 +844,10 @@ body {
   margin-left: 0.25rem;
 }
 
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
 .block {
   display: block;
 }
@@ -1065,6 +1069,10 @@ body {
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
+.border-destructive\/50 {
+  border-color: hsl(var(--destructive) / 0.5);
 }
 
 .bg-background {
@@ -1326,6 +1334,10 @@ body {
   color: rgb(79 70 229 / var(--tw-text-opacity));
 }
 
+.text-destructive {
+  color: hsl(var(--destructive));
+}
+
 .underline-offset-4 {
   text-underline-offset: 4px;
 }
@@ -1529,6 +1541,10 @@ body {
   color: hsl(var(--primary-foreground));
 }
 
+.dark\:border-destructive:is(.dark *) {
+  border-color: hsl(var(--destructive));
+}
+
 @media (min-width: 640px) {
   .sm\:w-\[120px\] {
     width: 120px;
@@ -1606,8 +1622,41 @@ body {
   -webkit-line-clamp: 1;
 }
 
+.\[\&\>svg\+div\]\:translate-y-\[-3px\]>svg+div {
+  --tw-translate-y: -3px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.\[\&\>svg\]\:absolute>svg {
+  position: absolute;
+}
+
+.\[\&\>svg\]\:left-4>svg {
+  left: 1rem;
+}
+
+.\[\&\>svg\]\:top-4>svg {
+  top: 1rem;
+}
+
+.\[\&\>svg\]\:text-destructive>svg {
+  color: hsl(var(--destructive));
+}
+
+.\[\&\>svg\]\:text-foreground>svg {
+  color: hsl(var(--foreground));
+}
+
+.\[\&\>svg\~\*\]\:pl-7>svg~* {
+  padding-left: 1.75rem;
+}
+
 .\[\&\>tr\]\:last\:border-b-0:last-child>tr {
   border-bottom-width: 0px;
+}
+
+.\[\&_p\]\:leading-relaxed p {
+  line-height: 1.625;
 }
 
 .\[\&_tr\:last-child\]\:border-0 tr:last-child {
