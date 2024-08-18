@@ -12,6 +12,8 @@ pub fn Label(
         class,
     );
     view! {
-        <label {..attributes} class=class>{children()}</label>
+        <label {..attributes} class=class>
+            {children()}
+        </label>
     }
 }

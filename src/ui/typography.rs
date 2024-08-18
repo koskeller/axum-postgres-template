@@ -12,7 +12,9 @@ pub fn TypographyH1(
         class,
     );
     view! {
-        <h1 {..attributes} class=class>{children()}</h1>
+        <h1 {..attributes} class=class>
+            {children()}
+        </h1>
     }
 }
 
@@ -27,7 +29,9 @@ pub fn TypographyH2(
         class,
     );
     view! {
-        <h2 {..attributes} class=class>{children()}</h2>
+        <h2 {..attributes} class=class>
+            {children()}
+        </h2>
     }
 }
 
@@ -39,7 +43,9 @@ pub fn TypographyH3(
 ) -> impl IntoView {
     let class = tw_merge!("scroll-m-20 text-2xl font-semibold tracking-tight", class);
     view! {
-        <h3 {..attributes} class=class>{children()}</h3>
+        <h3 {..attributes} class=class>
+            {children()}
+        </h3>
     }
 }
 
@@ -51,7 +57,9 @@ pub fn TypographyH4(
 ) -> impl IntoView {
     let class = tw_merge!("scroll-m-20 text-xl font-semibold tracking-tight", class);
     view! {
-        <h4 {..attributes} class=class>{children()}</h4>
+        <h4 {..attributes} class=class>
+            {children()}
+        </h4>
     }
 }
 
@@ -63,7 +71,9 @@ pub fn TypographyP(
 ) -> impl IntoView {
     let class = tw_merge!("leading-7 [&:not(:first-child)]:mt-6", class);
     view! {
-        <p {..attributes} class=class>{children()}</p>
+        <p {..attributes} class=class>
+            {children()}
+        </p>
     }
 }
 
@@ -75,7 +85,9 @@ pub fn TypographyBlockquote(
 ) -> impl IntoView {
     let class = tw_merge!("mt-6 border-l-2 pl-6 italic", class);
     view! {
-        <blockquote {..attributes} class=class>{children()}</blockquote>
+        <blockquote {..attributes} class=class>
+            {children()}
+        </blockquote>
     }
 }
 
@@ -87,7 +99,9 @@ pub fn TypographyList(
 ) -> impl IntoView {
     let class = tw_merge!("my-6 ml-6 list-disc [&>li]:mt-2", class);
     view! {
-        <ul {..attributes} class=class>{children()}</ul>
+        <ul {..attributes} class=class>
+            {children()}
+        </ul>
     }
 }
 
@@ -102,7 +116,9 @@ pub fn TypographyInlineCode(
         class,
     );
     view! {
-        <code {..attributes} class=class>{children()}</code>
+        <code {..attributes} class=class>
+            {children()}
+        </code>
     }
 }
 
@@ -114,7 +130,9 @@ pub fn TypographyLead(
 ) -> impl IntoView {
     let class = tw_merge!("text-xl text-muted-foreground", class);
     view! {
-        <p {..attributes} class=class>{children()}</p>
+        <p {..attributes} class=class>
+            {children()}
+        </p>
     }
 }
 
@@ -126,7 +144,9 @@ pub fn TypographyLarge(
 ) -> impl IntoView {
     let class = tw_merge!("text-lg font-semibold", class);
     view! {
-        <div {..attributes} class=class>{children()}</div>
+        <div {..attributes} class=class>
+            {children()}
+        </div>
     }
 }
 
@@ -138,7 +158,9 @@ pub fn TypographySmall(
 ) -> impl IntoView {
     let class = tw_merge!("text-sm font-medium leading-none", class,);
     view! {
-        <small {..attributes} class=class>{children()}</small>
+        <small {..attributes} class=class>
+            {children()}
+        </small>
     }
 }
 
@@ -150,6 +172,8 @@ pub fn TypographyMuted(
 ) -> impl IntoView {
     let class = tw_merge!("text-sm text-muted-foreground", class,);
     view! {
-        <p {..attributes} class=class>{children()}</p>
+        <p {..attributes} class=class>
+            {children()}
+        </p>
     }
 }

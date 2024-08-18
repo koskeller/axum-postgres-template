@@ -7,7 +7,5 @@ pub fn Skeleton(
     #[prop(attrs)] attributes: Vec<(&'static str, Attribute)>,
 ) -> impl IntoView {
     let class = tw_merge!("animate-pulse rounded-md bg-muted", class);
-    view! {
-        <div {..attributes} class=class />
-    }
+    view! { <div {..attributes} class=class></div> }
 }

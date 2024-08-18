@@ -8,6 +8,7 @@ pub mod middleware;
 pub mod routes;
 pub mod telemetry;
 pub mod ui;
+pub mod metadata;
 
 pub use cfg::*;
 pub use db::*;

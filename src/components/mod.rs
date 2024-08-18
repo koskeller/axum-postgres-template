@@ -3,6 +3,7 @@ use axum::response::Html;
 use leptos::*;
 
 pub mod layout;
+pub mod search_form;
 
 use layout::Layout;
 
@@ -13,7 +14,7 @@ where
 {
     Html(
         leptos::ssr::render_to_string(move || {
-            view! { <Layout> {f()} </Layout> }
+            view! { <Layout>{f()}</Layout> }
         })
         .to_string(),
     )

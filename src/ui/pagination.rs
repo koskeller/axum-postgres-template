@@ -79,7 +79,7 @@ pub fn PaginationPrevious(
     let class = tw_merge!("gap-1 pl-2.5", class);
     view! {
         <PaginationLink attr:aria-label="Go to previous page" {..attributes} class=class>
-            <IconChevronLeft class="h-4 w-4" />
+            <IconChevronLeft class="h-4 w-4"/>
             <span>"Previous"</span>
         </PaginationLink>
     }
@@ -94,7 +94,7 @@ pub fn PaginationNext(
     view! {
         <PaginationLink attr:aria-label="Go to next page" {..attributes} class=class>
             <span>"Next"</span>
-            <IconChevronRight class="h-4 w-4" />
+            <IconChevronRight class="h-4 w-4"/>
         </PaginationLink>
     }
 }
@@ -105,8 +105,12 @@ pub fn PaginationEllipsis(
     #[prop(attrs)] attributes: Vec<(&'static str, Attribute)>,
 ) -> impl IntoView {
     view! {
-        <span aria-hidden=true class=tw_merge!("flex h-9 w-9 items-center justify-center", class) {..attributes}>
-            <IconEllipsis class="h-4 w-4" />
+        <span
+            aria-hidden=true
+            class=tw_merge!("flex h-9 w-9 items-center justify-center", class)
+            {..attributes}
+        >
+            <IconEllipsis class="h-4 w-4"/>
             <span class="sr-only">"More pages"</span>
         </span>
     }

@@ -14,10 +14,10 @@ pub fn Checkbox(
     );
     view! {
         <div class="flex items-center space-x-2">
-            <input id=id.clone() type="checkbox" {..attributes} class=class />
+            <input id=id.clone() type="checkbox" {..attributes} class=class/>
             <label
-            for=id
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                for=id
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
                 {label}
             </label>
