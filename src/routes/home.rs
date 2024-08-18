@@ -4,13 +4,14 @@ use leptos::*;
 use crate::{
     ui::{
         Button, ButtonVariant, Card, CardContent, CardDescription, CardFooter, CardHeader,
-        CardTitle, Checkbox,
+        CardTitle, Checkbox, Pagination, PaginationContent, PaginationEllipsis, PaginationItem,
+        PaginationLink, PaginationNext, PaginationPrevious,
     },
     AppState,
 };
 
 pub async fn page(State(_state): State<AppState>) -> Html<String> {
-    crate::components::render(move || {
+    crate::components::render(move || -> Fragment {
         view! {
             <Card class="mt-100">
                 <CardHeader>
@@ -33,6 +34,26 @@ pub async fn page(State(_state): State<AppState>) -> Html<String> {
             <Button variant=ButtonVariant::Secondary>"Hello"</Button>
             <Button variant=ButtonVariant::Destructive>"Hello"</Button>
             </div>
+
+            <div>
+                <Pagination>
+                <PaginationContent>
+                    <PaginationItem>
+                    <PaginationPrevious attr:href="#" />
+                    </PaginationItem>
+                    <PaginationItem>
+                    <PaginationLink attr:href="#">1</PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                    <PaginationEllipsis />
+                    </PaginationItem>
+                    <PaginationItem>
+                    <PaginationNext attr:href="#" />
+                    </PaginationItem>
+                </PaginationContent>
+                </Pagination>
+            </div>
+
         }
     })
 }
