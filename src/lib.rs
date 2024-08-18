@@ -2,11 +2,12 @@ use axum::Router;
 
 pub mod api_error;
 pub mod cfg;
+pub mod components;
 pub mod db;
 pub mod middleware;
 pub mod routes;
 pub mod telemetry;
-pub mod components;
+pub mod ui;
 
 pub use cfg::*;
 pub use db::*;

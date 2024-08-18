@@ -3,7 +3,6 @@ use axum::response::Html;
 use leptos::*;
 
 pub mod layout;
-pub mod ui;
 
 use layout::Layout;
 

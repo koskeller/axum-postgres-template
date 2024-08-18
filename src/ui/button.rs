@@ -1,4 +1,5 @@
 use leptos::*;
+use tailwind_fuse::*;
 
 #[derive(Clone, Copy)]
 pub enum ButtonVariant {
@@ -32,8 +33,8 @@ impl ButtonVariant {
 #[derive(Clone, Copy)]
 pub enum ButtonSize {
     Default,
-    Sm,
-    Lg,
+    Small,
+    Large,
     Icon,
 }
 
@@ -41,8 +42,8 @@ impl ButtonSize {
     fn as_class(self) -> &'static str {
         match self {
             ButtonSize::Default => "h-10 px-4 py-2",
-            ButtonSize::Sm => "h-9 rounded-md px-3",
-            ButtonSize::Lg => "h-11 rounded-md px-8",
+            ButtonSize::Small => "h-9 rounded-md px-3",
+            ButtonSize::Large => "h-11 rounded-md px-8",
             ButtonSize::Icon => "h-10 w-10",
         }
     }
@@ -52,19 +53,18 @@ impl ButtonSize {
 pub fn Button(
     #[prop(optional, default = ButtonVariant::Default)] variant: ButtonVariant,
     #[prop(optional, default = ButtonSize::Default)] size: ButtonSize,
-    #[prop(optional, default = String::new())] class: String,
+    #[prop(optional)] class: &'static str,
+    #[prop(attrs)] attributes: Vec<(&'static str, Attribute)>,
     children: Children,
 ) -> impl IntoView {
-    let class_name = format!(
-        "{} {} {} {}",
+    let class = tw_merge!(
         "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
         variant.as_class(),
         size.as_class(),
         class,
     );
-
     view! {
-        <button class=&class_name>
+        <button {..attributes} class=class>
             {children()}
         </button>
     }

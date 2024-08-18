@@ -2138,6 +2138,7 @@ dependencies = [
  "serde",
  "serde_json",
  "sqlx",
+ "tailwind_fuse",
  "thiserror",
  "tokio",
  "tower",
@@ -2581,6 +2582,15 @@ name = "sync_wrapper"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "384595c11a4e2969895cad5a8c4029115f5ab956a9e5ef4de79d11a426e5f20c"
+
+[[package]]
+name = "tailwind_fuse"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2e9d32d52c3191836fe1858b6b38442d1e536eeb11883b2041e6db080a208c2d"
+dependencies = [
+ "nom",
+]
 
 [[package]]
 name = "tempfile"
