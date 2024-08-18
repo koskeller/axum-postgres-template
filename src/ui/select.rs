@@ -1,6 +1,13 @@
 use leptos::*;
 use tailwind_fuse::*;
 
+/// Usage:
+/// ``` html
+/// <Select attr:id="" attr:name="">
+///     <SelectOption text="" value=""/>
+///     <SelectOption text="" value=""/>
+/// </Select>
+/// ```
 #[component]
 pub fn Select(
     #[prop(optional, into)] class: String,

@@ -4,8 +4,8 @@ use tailwind_fuse::*;
 /// Usage:
 /// ``` html
 /// <div class="flex items-center">
-///  <Radion attr:id="email" attr:name="method" attr:checked=true>
-///  <Label attr:for="email">"Email"</label>
+///     <Radio attr:id="email" attr:name="method" attr:value="email" attr:checked=true />
+///     <Label attr:for="email" class="ml-2">"Email"</Label>
 /// </div>
 /// ```
 #[component]
