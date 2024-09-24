@@ -4,7 +4,7 @@ pub struct Metadata {
     pub description: String,
     pub base_url: String,
     pub canonical: String,
-    pub locale: String,
+    pub lang: String,
     pub r#type: String,
 }
 
@@ -32,9 +32,8 @@ impl Metadata {
             description: "".to_string(),
             base_url: "".to_string(),
             canonical: "/".to_string(),
-            locale: "en_US".to_string(),
+            lang: "en".to_string(),
             r#type: "Website".to_string(),
         }
     }
 }
-

@@ -3,16 +3,15 @@ use leptos::*;
 use crate::metadata::Metadata;
 
 #[component]
-pub fn Layout(children: Children) -> impl IntoView {
-    let metadata = Metadata::default();
+pub fn Layout(meta: Metadata, children: Children) -> impl IntoView {
     view! {
-        <html lang="en">
+        <html lang=meta.lang>
             <head>
                 <meta charset="UTF-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-                <title>{metadata.title}</title>
-                <meta name="description" content=metadata.description/>
-                <link rel="canonical" href=metadata.base_url/>
+                <title>{meta.title}</title>
+                <meta name="description" content=meta.description/>
+                <link rel="canonical" href=meta.base_url/>
                 <link href="/public/styles.css" rel="stylesheet"/>
             </head>
             <body>
@@ -25,4 +24,3 @@ pub fn Layout(children: Children) -> impl IntoView {
         </html>
     }
 }
-
