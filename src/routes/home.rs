@@ -1,11 +1,8 @@
 use axum::{extract::State, response::Html};
-use leptos::*;
 
-use crate::{render, AppState};
+use crate::{components::Layout, html, AppState};
 
 pub async fn page(State(_state): State<AppState>) -> Html<String> {
-    render(move || {
-        view! { <main></main> }
-    })
+    html!{ <Layout>"Hello"</Layout> }
 }
 
