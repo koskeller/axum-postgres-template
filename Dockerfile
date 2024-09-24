@@ -32,6 +32,10 @@ RUN apt-get update -y \
 # Copy the compiled binary from the builder stage
 COPY --from=builder /app/target/release/server server
 
+
+# Copy the public folder from the builder stage
+COPY --from=builder /app/public /app/public
+
 # Set environment variables
 ENV PORT 8080
 ENV APP_ENVIRONMENT production
